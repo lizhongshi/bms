@@ -7,7 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.dly.Repository.UserRepository;
-import com.dly.dao.UserDAO;
+import com.dly.dao.GroupDAO;
 import com.dly.entity.Moudle;
 import com.dly.entity.User;
 import com.dly.service.UserService;
@@ -16,7 +16,7 @@ public class UserServiceImpl  implements UserService{
 	@Resource
 	UserRepository userRepository;
 	@Resource
-	UserDAO userDAO;
+	GroupDAO userDAO;
 	@Override
 	public User findUserByUserName(String userName) {
 		
