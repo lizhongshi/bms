@@ -40,8 +40,5 @@ public class GroupController {
 		return groupService.deleteGroup(id);
 	}
 	
-	@RequestMapping(value="level")
-	public Object level() {
-		return groupService.getLevel();
-	}
+	
 }

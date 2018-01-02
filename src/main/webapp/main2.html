@@ -86,9 +86,7 @@ function saveUser(){
 }
 
 function Search(){
-	alert($("#county_search").combobox("getValue"))
-	alert($("#moudle_search").combobox("getValue"))
-	alert($("#level_search").combobox("getValue"))
+	
 	
 	
 	$('#dg').datagrid({
@@ -152,7 +150,7 @@ function Search(){
 			<input id="level_search" class="easyui-combobox" 
 								name="levelId"
 								data-options="
-								url:'/group/level',
+								url:'/level/levels',
 								valueField:'id',
 								textField:'level',
 								panelHeight:'auto'
@@ -198,7 +196,7 @@ function Search(){
         				<input id="level_search" class="easyui-combobox" required="true"
 								name="levelId"
 								data-options="
-								url:'/group/level',
+								url:'/level/levels',
 								valueField:'id',
 								textField:'level',
 								panelHeight:'auto'

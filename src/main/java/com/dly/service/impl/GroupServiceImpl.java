@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.dly.Repository.GroupRepository;
 import com.dly.Repository.LevelRepository;
+import com.dly.dao.GroupDAO;
 import com.dly.entity.Group;
+import com.dly.entity.Group_m;
 import com.dly.entity.Level;
 import com.dly.entity.Result;
 import com.dly.service.GroupService;
@@ -18,12 +20,13 @@ public class GroupServiceImpl  implements GroupService{
 	GroupRepository groupRepository;
 	@Resource
 	LevelRepository levelRepository;
-
+	@Resource
+	GroupDAO groupDAO;
 
 	@Override
-	public List<Group> findGroupAll() {
+	public List<Group_m> findGroupAll() {
 		
-		return groupRepository.findAll();
+		return groupDAO.getAll();
 	}
 
 	@Override
@@ -33,9 +36,12 @@ public class GroupServiceImpl  implements GroupService{
 	}
 
 	@Override
-	public List<Group> findGroupByMoudleId(Integer moudleId, Integer countyId,Integer levelId) {
-		
-		return groupRepository.findGroupByMoudleId(countyId, moudleId, levelId);
+	public List<Group_m> findGroupByMoudleId(Integer moudleId, Integer countyId,Integer levelId) {
+		Group_m g=new Group_m();
+		g.setMoudleId(moudleId);
+		g.setCountyId(countyId);
+		g.setLevelId(levelId);
+		return groupDAO.getGroupByCountyIdAndMoudleIdAndLevelId(g);
 	}
 
 	@Override

@@ -7,16 +7,18 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.dly.Repository.CountyRepository;
-import com.dly.entity.County;
+import com.dly.dao.CountyDAO;
+import com.dly.entity.County_m;
 import com.dly.service.CountyService;
 @Service()
 public class CountyServiceImpl  implements CountyService{
 	@Resource
 	CountyRepository CountyRepository;
-
+	@Resource
+	CountyDAO countyDAO;
 	@Override
-	public List<County> findCountyAll() {	
-		return CountyRepository.findAll();
+	public List<County_m> findCountyAll() {	
+		return countyDAO.getCountyAll();
 	}
 	
 	

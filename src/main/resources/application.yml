@@ -8,8 +8,9 @@ spring:
         url: jdbc:mysql://localhost:3306/app?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
         username: lizhongshi
         password: LiZhongShi0917!
-        type: com.alibaba.druid.pool.DruidDataSource
-        driver-class-name: com.mysql.jdbc.Driver
+        type: com.alibaba.druid.pool.DruidDataSource 
+        driver-class-name: com.mysql.jdbc.Driver   
+        platform: mysql
         filters: stat
         maxActive: 20
         initialSize: 1
