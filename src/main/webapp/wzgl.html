@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>后台管理-进销存管理系统</title>
-<link rel="stylesheet" type="text/css" href="/static/jquery-easyui-1.3.3/themes/default/easyui.css"></link>
-<link rel="stylesheet" type="text/css" href="/static/jquery-easyui-1.3.3/themes/icon.css"></link>
+<link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.3.3/themes/default/easyui.css"></link>
+<link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.3.3/themes/icon.css"></link>
 <style type="text/css">
 
 	.clock {
@@ -23,18 +23,21 @@
 		padding-top: 30px;
 	}
 	
+	
 </style>
-<script type="text/javascript" src="/static/jquery-easyui-1.3.3/jquery.min.js"></script>
-<script type="text/javascript" src="/static/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="/static/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="static/jquery-easyui-1.3.3/jquery.min.js"></script>
+<script type="text/javascript" src="static/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="static/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
+
+
 var url;
 function deleteGroup(){
 	var row=$('#dg').datagrid('getSelected');
 	if(row){
 		$.messager.confirm("系统提示","您确定要删除这条记录吗?",function(r){
 			if(r){
-				$.post('/group/delete',{id:row.id},function(result){
+				$.post('group/delete',{id:row.id},function(result){
 					console.log(result)
 					if(result.success){
 						$.messager.alert("系统提示","已成功删除这条记录!");
@@ -51,7 +54,7 @@ function deleteGroup(){
 function newGroup(){
 	$("#dlg").dialog('open').dialog('setTitle','添加文章');
 	$('#fm').form('clear');
-	url='/group/save';
+	url='group/save';
 }
 
 
@@ -60,7 +63,7 @@ function editGroup(){
 	if(row){
 		$("#dlg").dialog('open').dialog('setTitle','编辑文章');
 		$('#fm').form('load',row);
-		url='/group/save?id='+row.id+'';
+		url='group/edit?id='+row.id+'';
 	}
 }
 
@@ -68,6 +71,7 @@ function editGroup(){
 function saveUser(){
 	$('#fm').form('submit',{
 		url:url,
+		data:{"istp":$("#istp").find("option:selected").val()},
 		onSubmit:function(){
 			return $(this).form('validate');
 		},
@@ -90,35 +94,33 @@ function Search(){
 	
 	
 	$('#dg').datagrid({
-	    url:'/group/groups?moudleId='+$("#county_search").combobox("getValue")+'&countyId='+$("#moudle_search").combobox("getValue")+'&levelId='+$("#level_search").combobox("getValue")+'',
-		
+	    url:'group/groups?moudleId='+$("#moudle_search").combobox("getValue")+'&countyId='+$("#county_search").combobox("getValue")+'&levelId='+$("#level_search").combobox("getValue")+'',
+	    success:function(result){
+	    
+	    }
 	});
 	
 	$("#dg").datagrid("reload");
 }
-	$(function(){
-		$("#istp").combobox({
-			onChange: function (n,o) {
 
-			}
-
-			});
-	})
+	
+	
 </script>
 </head>
 <body >
-<table id="dg" title="文章管理" class="easyui-datagrid" style="width:700px;height:365px"
+<table id="dg" title="文章管理" class="easyui-datagrid" style="width:1000px;height:365px"
             
             toolbar="#toolbar" pagination="true"
             rownumbers="true" fitColumns="true" singleSelect="true">
         <thead>
             <tr>
-            	<th field="id" width="20px" hidden="true">编号</th>
-                <th field="title" width="20px">标题</th>
+            	<th field="id" width="20px"  >ID</th>
+                <th field="title" width="10px">标题</th>
                 <th field="text" width="20px">文章内容</th>
-                <th field="imageId" width="20px">图片id</th>
-                 <th field="istp" width="20px">是否图片</th>
-                 <th field="videoUrl" width="20px">视频地址</th>
+                <th field="imageId" width="10px">首页图片id</th>
+        		<th field="images" width="20px">轮播图id</th>
+                 <th field="istp" width="8px">是否图片</th>
+                 <th field="videoId" width="20px">视频id</th>
             </tr>
         </thead>
     </table>
@@ -132,7 +134,7 @@ function Search(){
 			<input id="county_search" class="easyui-combobox" 
 			name="county"
 			data-options="
-					url:'/county/all',
+					url:'county/all',
 					valueField:'id',
 					textField:'name',
 					panelHeight:'auto'
@@ -141,7 +143,7 @@ function Search(){
 			<input id="moudle_search" class="easyui-combobox" 
 			name="moudle"
 			data-options="
-					url:'/moudle/all',
+					url:'moudle/all',
 					valueField:'id',
 					textField:'title',
 					panelHeight:'auto'
@@ -150,12 +152,13 @@ function Search(){
 			<input id="level_search" class="easyui-combobox" 
 								name="levelId"
 								data-options="
-								url:'/level/levels',
+								url:'level/levels',
 								valueField:'id',
 								textField:'level',
 								panelHeight:'auto'
 								"/>
 			<a  class="easyui-linkbutton" iconCls="icon-search" onclick="Search()">搜索</a>
+			<a  class="easyui-linkbutton" iconCls="icon-del" onclick="clear()">清空</a>
 		</div>
         
     </div>
@@ -170,7 +173,7 @@ function Search(){
         				<input id="county_search" class="easyui-combobox" required="true"
 										name="countyId"
 										data-options="
-										url:'/county/all',
+										url:'county/all',
 										valueField:'id',
 										textField:'name',
 										panelHeight:'auto'
@@ -183,7 +186,7 @@ function Search(){
         				<input id="moudle_search" class="easyui-combobox" required="true"
 								name="moudleId"
 								data-options="
-								url:'/moudle/all',
+								url:'moudle/all',
 								valueField:'id',
 								textField:'title',
 								panelHeight:'auto'
@@ -196,7 +199,7 @@ function Search(){
         				<input id="level_search" class="easyui-combobox" required="true"
 								name="levelId"
 								data-options="
-								url:'/level/levels',
+								url:'level/levels',
 								valueField:'id',
 								textField:'level',
 								panelHeight:'auto'
@@ -209,24 +212,29 @@ function Search(){
         		</tr>
         		<tr>
         			<td>内容</td>
-        			<td><input name="text" class="easyui-validatebox" validType="text" required="true" style="width: 200px;"></td>
+        			<td><textarea name="text" rows="3" cols="20" style="width: 200px;height: 100px">
+</textarea></td>
         		</tr>
         		<tr>
         			<td>是否图片</td>
         			<td>
-        				<select id="istp" class="easyui-combobox"required="true" panelHeight="auto" style="width:200px;  ">
+        				<select id="istp" name="istp" class="easyui-combobox"required="true" panelHeight="auto" style="width:200px;  ">
         					<option  value="1">是</option>
 							<option value="0">否</option>
         				</select>
 					</td>
         		</tr>
-        		<tr id="ImageUrl"  >
+        		<tr id="ImageId"  >
         			<td>图片id</td>
-        			<td><input  name="imageUrl" class="easyui-validatebox" validType="text"  style="width: 200px;"></td>
+        			<td><input  name="imageId" class="easyui-validatebox" validType="text"  style="width: 200px;"></td>
         		</tr>
-        		<tr id="videoUrl" >
-        			<td>视频地址</td>
-        			<td><input  name="videoUrl" class="easyui-validatebox" validType="text"  style="width: 200px;"></td>
+        		<tr id="Images"  >
+        			<td>轮播图id</td>
+        			<td><input id="images" name="images" class="easyui-validatebox" validType="text" value="多个用,号区分" style="width: 200px;"></td>
+        		</tr>
+        		<tr id="videoId" >
+        			<td>视频id</td>
+        			<td><input  name="videoId" class="easyui-validatebox" validType="text"  style="width: 200px;"></td>
         		</tr>
         		
         	</table>

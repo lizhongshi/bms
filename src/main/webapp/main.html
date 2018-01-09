@@ -3,26 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <title>后台管理系统</title>
-<link rel="stylesheet" type="text/css" href="/static/jquery-easyui-1.3.3/themes/default/easyui.css"></link>
-<link rel="stylesheet" type="text/css" href="/static/jquery-easyui-1.3.3/themes/icon.css"></link>
+<link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.3.3/themes/default/easyui.css"></link>
+<link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.3.3/themes/icon.css"></link>
 <style type="text/css">
 	
 	
 </style>
-<script type="text/javascript" src="/static/jquery-easyui-1.3.3/jquery.min.js"></script>
-<script type="text/javascript" src="/static/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="/static/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript" src="/static/js/ajax.js"></script>
+<script type="text/javascript" src="static/jquery-easyui-1.3.3/jquery.min.js"></script>
+<script type="text/javascript" src="static/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="static/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="static/js/ajax.js"></script>
 <script type="text/javascript">
 $(function(){
 	window.setInterval("showTime()",1000);
-	var content="<iframe frameborder=0 scrolling='auto' style='width:100%;height:99%' src='/main2.html'></iframe>";
-		$("#tabs").tabs("add",{
-			title:"首页",
-			iconCls:"menu-25",
-			closable:false,
-			content:content
-		});
+	
 		
 		$("#tree").tree({
 			lines:true,
@@ -31,13 +25,8 @@ $(function(){
 				$("#tree").tree("expandAll");
 			},
 			onClick:function(node){
-				if(node.id==6040){
-					openPasswordModifyDialog();
-				}else if(node.id==6050){
-					logout();
-				}else if(node.attributes.url){
-					openTab(node);
-				}
+				openTab(node)
+				
 			}
 		});
 		 
@@ -55,6 +44,36 @@ function showTime(){
 		
 		$("#clock").text("现在是:" + this.year + "年" + this.month + "月" + this.date + "日 " + this.hour + ":" + this.minute + ":" + this.second + " " + this.day);
 	}
+function openTab(node){
+	if($("#tabs").tabs("exists",node.text)){
+		$("#tabs").tabs("select",node.text)
+	}else{
+		var url='';
+		if(node.text=="文章管理"){
+			url='wzgl.html';
+		}else if(node.text=="模块管理"){
+			url='mkgl.html';
+		}else if(node.text=="地区管理"){
+			url='dqgl.html';
+		}else if(node.text=="图片管理"){
+			url='tpgl.html';
+		}else if(node.text=="消息推送"){
+			url='jpush.html';
+		}else if(node.text=="视频管理"){
+			url='video.html';
+		}else if(node.text=="轮播图管理"){
+			url='lbt.html';
+		}
+		var content="<iframe frameborder=0 scrolling='auto' style='width:100%;height:99%' src='"+url+"'></iframe>";
+		
+		$("#tabs").tabs("add",{
+			title:node.text,
+			iconCls:node.iconCls,
+			closable:true,
+			content:content
+		});
+	}
+}
 	
 </script>
 </head>
@@ -62,12 +81,12 @@ function showTime(){
 	<div region="north" style="height: 72px;">
 			<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td width="381px" style="background:url(/static/images/top_left.jpg)">
+					<td width="381px" style="background:url(static/images/top_left.jpg)">
 					</td>
-					<td style="background:url(/static/images/top_center.jpg)">
+					<td style="background:url(static/images/top_center.jpg)">
 						<div id="userInfo" class="userInfo"></div>
 					</td>
-					<td valign="bottom" width="544px" style="background:url(/static/images/top_right.jpg)">
+					<td valign="bottom" width="544px" style="background:url(static/images/top_right.jpg)">
 						<div id="clock" class="clock"></div>
 					</td>
 				</tr>
@@ -80,7 +99,15 @@ function showTime(){
 		</div>
 	</div>		
 	<div region="west" style="width: 200px" title="导航菜单" split="true" iconCls="icon-navigation">
-		<ul id="tree" class="easyui-tree" style="padding: 10px"></ul>
+		<ul id="tree" class="easyui-tree" style="padding: 10px">
+			<li name="mian1.html">模块管理</li>
+			<li name="mian2.html">文章管理</li>
+			<li >图片管理</li>
+			<li>消息推送</li>
+			<li>视频管理</li>
+			<li>轮播图管理</li>
+		
+		</ul>
 	</div>
 		
 

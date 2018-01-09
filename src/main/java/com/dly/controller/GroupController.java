@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
-import com.dly.entity.Group;
+import com.dly.entity.Group_m;
+import com.dly.entity.TGroup;
 import com.dly.service.GroupService;
 
 @RestController
@@ -21,16 +22,24 @@ public class GroupController {
 		return groupService.findGroupAll();
 	}
 	@RequestMapping(value="save")
-	public int insertGroup(Group group) {
-		System.out.println(group);
+	public int insertGroup(TGroup group) {
+		System.out.println("参数--->"+group);
 		return groupService.insertGroup( group);
+	}
+	@RequestMapping(value="edit")
+	public int editGroupById(TGroup group) {
+		System.out.println(group);
+		return groupService.editGroupById( group);
 	}
 	
 	
 	
+	
 	@RequestMapping(value="groups")
-	public Object findGroupByMoudleId(Integer  moudleId,Integer countyId,Integer levelId) {
-		String json=JSONObject.toJSONString( groupService.findGroupByMoudleId(moudleId, countyId,levelId));
+	public Object findGroupByMoudleId( TGroup group) {
+		
+		System.out.println("参数"+group);
+		String json=JSONObject.toJSONString( groupService.findGroupByMoudleId(group));
 		System.out.println("------->"+json);
 		return  json;
 	}

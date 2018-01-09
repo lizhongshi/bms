@@ -1,32 +1,32 @@
 package com.dly.controller;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dly.entity.Group_m;
-import com.dly.entity.User;
+import com.dly.entity.TAdmin;
 import com.dly.service.UserService;
 @Controller
-@RequestMapping(value="test")
+@RequestMapping(value="personal")
 public class UserController {
 	@Resource
 	UserService userService;
+
+	
+	@PostMapping(value="login",produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	@RequestMapping(value="test")
-	public Object o(String userName) {
-		
-		return userService.findUserByUserName(userName);
+	public  Object login(@RequestBody TAdmin user) {
+		System.out.println("登录参数----->"+user);
+	return 	userService.login(user);
 	}
-	@GetMapping("user")
+	@PostMapping(value="register",produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public  List<Group_m> test() {
-	return 	userService.test();
+	public  Object register(@RequestBody TAdmin user) {
+	return 	userService.register(user);
 	}
 
 }

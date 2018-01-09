@@ -20,7 +20,7 @@
 		
 	</resultMap>
 	<select id="test"  resultMap="getGroupAndLevel">
-	SELECT g.`id` id,g.`title` title,g.`text` TEXT,g.`moudle_id` moudle_id,g.`istp` istp,g.`video_url` video_url,g.`county_id` county_id,g.`image_id` image_id,g.`level_id` lid,l.`level` LEVEL  FROM t_group g LEFT JOIN t_level l ON g.`level_id`=l.`id`
+	SELECT g.`id` id,g.`title` title,g.`text` TEXT,g.`moudle_id` moudle_id,g.video_url videoUrl,g.`istp` istp,g.`county_id` county_id,g.`image_id` image_id,g.`level_id` lid,l.`level` LEVEL  FROM t_group g LEFT JOIN t_level l ON g.`level_id`=l.`id`
 
 	</select>
 	<select id="getGroupByCountyIdAndMoudleIdAndLevelId" parameterType="com.dly.entity.Group_m"  resultType="com.dly.entity.Group_m">
@@ -40,5 +40,38 @@
 	<select id="getAll"   resultType="com.dly.entity.Group_m">
 		select * from t_group
 	</select>
-	
+	<insert id="insertGroup" parameterType="com.dly.entity.Group_m" >
+		insert into t_group (title,text,moudle_id,image_id,video_url,istp,county_id,level_id) values(
+		#{title},#{text},#{moudleId},#{imageId},#{videoUrl},#{istp},#{countyId},#{levelId})
+	</insert>
+	<delete id="deleteGroupById" parameterType="int" >
+		delete from t_group where id=#{id}
+	</delete>
+	<update id="editGroupById" parameterType="com.dly.entity.Group_m">
+		update t_group 
+		<set>
+			<if test="title!=null">
+			title=#{title}
+			</if>
+			<if test="text!=null">
+			,text=#{text}
+			</if>
+			<if test="moudleId!=null">
+			,moudle_id=#{moudleId}
+			</if>
+			<if test="imageId!=null">
+			,image_id=#{imageId}
+			</if>
+			<if test="istp!=null">
+			,istp=#{istp}
+			</if>
+			<if test="countyId!=null">
+			,county_id=#{countyId}
+			</if>
+			<if test="levelId!=null">
+			,level_id=#{levelId}
+			</if>
+		</set>
+		 where id=#{id}	
+	</update>
 </mapper>  

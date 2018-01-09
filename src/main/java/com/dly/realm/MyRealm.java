@@ -16,6 +16,13 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
+import com.dly.dao.TAdminMapper;
+import com.dly.entity.Result;
+import com.dly.entity.TAdmin;
+import com.dly.entity.TAdminExample;
+import com.dly.entity.TAdminExample.Criteria;
+import com.dly.util.Util;
+
 
 
 /**
@@ -24,7 +31,8 @@ import org.apache.shiro.subject.PrincipalCollection;
  *
  */
 public class MyRealm extends AuthorizingRealm{
-
+	@Resource
+	private TAdminMapper tAdminMapper;
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) {
 		// TODO Auto-generated method stub
@@ -32,9 +40,21 @@ public class MyRealm extends AuthorizingRealm{
 	}
 
 	@Override
-	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken arg0) throws AuthenticationException {
-		// TODO Auto-generated method stub
-		return null;
+	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+		TAdminExample example =new TAdminExample();
+		Criteria criteria=example.createCriteria();
+		String  userName=(String)token.getPrincipal();
+		criteria.andUserNameEqualTo(userName);
+		List<TAdmin>result= tAdminMapper.selectByExample(example);
+		if(result.size()>0) {
+			
+			TAdmin admin=result.get(0);
+			AuthenticationInfo authcInfo=new SimpleAuthenticationInfo(admin.getUserName(),admin.getPassword(),"xxx");
+			return authcInfo;
+		}else {
+			return null;
+		}
+		
 	}
 
 //	@Resource

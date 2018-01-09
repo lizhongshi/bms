@@ -14,7 +14,6 @@ function ajax(url,type,data){
 	    },
 	    success:function(data,textStatus,jqXHR){
 	        result=data;
-	        
 	    },
 	    error:function(xhr,textStatus){
 	        console.log('错误')

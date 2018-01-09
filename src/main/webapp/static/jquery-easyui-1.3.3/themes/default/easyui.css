@@ -46,6 +46,10 @@
   right: 5px;
   width: auto;
 }
+.textbox .textbox-text {
+
+white-space: pre-wrap;
+}
 .panel-tool a {
   display: inline-block;
   width: 16px;

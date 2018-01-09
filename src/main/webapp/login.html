@@ -12,7 +12,6 @@ canvas{z-index:-1;position:absolute;}
 .white_content {  display: none;  position: absolute;  top: 25%;  left: 35%;  width: 25%;  height: 15%;  padding: 16px;  border: 2 solid black;  background-color: white;  z-index:1002;  overflow: auto;  } 
 </style>
 <script src="static/js/jquery.js"></script>
-<script src="static/js/verifyCode.js"></script>
 <script src="static/js/Particleground.js"></script>
 <script>
 
@@ -23,47 +22,62 @@ canvas{z-index:-1;position:absolute;}
 	    lineColor: '#5cbdaa'
 	  });
 	  
+	  document.onkeyup = function (e) {  
+		    if (window.event)//如果window.event对象存在，就以此事件对象为准  
+		        e = window.event;  
+		    var code = e.charCode || e.keyCode;  
+		    if (code == 13) {  
+		        //此处编写用户敲回车后的代码
+		    	login();
+		    }  
+		}  
+	  
+	  
+	  
 	  $("#loginBtn").click(function(){
-		 
-		  $.post("/user/login",{userName:$("#userName").val(),password:$("#password").val(),"imageCode":$("#imageCode").val()},function(result){
-			 if(result.success){
-				 if(result.roleSize==1){
-					 var roleId=result.roleList[0].id;
-					 $.post("/user/saveRole",{roleId:roleId},function(result){
-						if(result.success){
-							window.location.href="/main.html";
-						}
-					 });
-				 }else{
-					 $("#roleList").empty();
-					 var roles=result.roleList;
-					 for(var i=0;i<roles.length;i++){
-						 if(i==0){
-							 $("#roleList").append("<input type='radio' checked=true name='role' value='"+roles[i].id+"'/>"+roles[i].name+"&nbsp;&nbsp;");
-						 }else{
-							 $("#roleList").append("<input type='radio' name='role' value='"+roles[i].id+"'/>"+roles[i].name+"&nbsp;&nbsp;");
-						 }
-						 document.getElementById("light").style.display="block";
-						 document.getElementById("fade").style.display="block";
-					 }
-				 }
-			 }else{
-				 alert(result.errorInfo);
-			 }
-		  });
-		  
-	  });
+		  login();
 	  
 	});
 	
-	
-	function saveRole(){
-		var roleId=$("input[name='role']:checked").val();
-		$.post("/user/saveRole",{roleId:roleId},function(result){
-			if(result.success){
-				window.location.href="/main.html";
-			}
-		 });
+	})
+	function  login(){
+		var data=new Object();
+		  data.userName=$("#userName").val();
+		  data.password=$("#password").val();
+		  
+		  
+		  if($("#userName").val()==''||$("#password").val()==''){
+			  alert('请输入用户名密码')
+			  return ;
+		  }
+		  $.ajax({
+			    url:'personal/login',
+			    type:'POST', //GET
+			    data:JSON.stringify(data),
+			    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+			    contentType : 'application/json;charset=UTF-8', //contentType很重要   
+			    beforeSend:function(xhr){
+			      
+			        console.log('发送前')
+			    },
+			    success:function(data,textStatus,jqXHR){
+			        console.log(data)
+			 	if(data.success){
+			 		window.location.href="main.html";
+			 	}else{
+			 		alert(data.message)
+			 	}
+			     
+			    },
+			    error:function(xhr,textStatus){
+			        console.log('错误')
+			        console.log(xhr)
+			        console.log(textStatus)
+			    },
+			    complete:function(){
+			        console.log('结束')
+			    }
+			})
 	}
 	
 </script>
@@ -71,7 +85,7 @@ canvas{z-index:-1;position:absolute;}
 <body>
 <dl class="admin_login">
  <dt>
-  <strong>进销存管理系统</strong>
+  <strong>京张后台管理系统</strong>
   <em>Lnvoicing Management System</em>
  </dt>
  <dd class="user_icon">
@@ -85,18 +99,9 @@ canvas{z-index:-1;position:absolute;}
   <input type="button" id="loginBtn" value="立即登陆" class="submit_btn"/>
  </dd>
  <dd>
-  <p>© 2012-2017 南通小锋网络科技有限公司  版权所有</p>
-  <p><a href="http://www.java1234.com" target="_blank">Java知识分享网 </a></p>
+  
  </dd>
 </dl>
-	<div id="light" class="white_content"> 
-          <p>请选择一个角色登录系统</p>
-          <br/>
-          <div id="roleList">
-          </div>
-          <br/>
-          <input type="button" value="提交" onclick="saveRole()"/>
-	</div> 
 <div id="fade" class="black_overlay"> 
 </div> 
 </body>

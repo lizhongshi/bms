@@ -1,11 +1,15 @@
 server:
   port: 80
   context-path: /
-  
-
+   
 spring:
+    http:
+      multipart:
+        enabled: true
+        max-file-size: 100Mb 
+        max-request-size: 100Mb
     datasource:
-        url: jdbc:mysql://localhost:3306/app?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+        url: jdbc:mysql://39.106.129.135:3306/app?characterEncoding=utf-8&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
         username: lizhongshi
         password: LiZhongShi0917!
         type: com.alibaba.druid.pool.DruidDataSource 
@@ -24,9 +28,19 @@ spring:
         testOnReturn: false
         poolPreparedStatements: true
         maxOpenPreparedStatements: 20
-      
+  
+
 jpa:
      hibernate.ddl-auto: update
      show-sql: true
      thymeleaf:
       cache: false
+mybatis: 
+  configuration:
+    mapUnderscoreToCamelCase: true
+jpush:
+  config:
+    appkey: c241f4c4694b35c7fc40bd7f
+    masterSecret: 8e8afdd7a30f221bf681faea
+   
+      

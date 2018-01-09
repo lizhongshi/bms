@@ -13,11 +13,10 @@ import javax.persistence.Table;
  */
 
 public class Moudle_m {
-
 	private String  id;
-
 	private String  title;
 	private String imageId;
+	private String dsfUrl;
 	public String getId() {
 		return id;
 	}
@@ -35,6 +34,17 @@ public class Moudle_m {
 	}
 	public void setImageId(String imageId) {
 		this.imageId = imageId;
+	}
+	
+	public String getDsfUrl() {
+		return dsfUrl;
+	}
+	public void setDsfUrl(String dsfUrl) {
+		this.dsfUrl = dsfUrl;
+	}
+	@Override
+	public String toString() {
+		return "Moudle_m [id=" + id + ", title=" + title + ", imageId=" + imageId + ", dsfUrl=" + dsfUrl + "]";
 	}
 	
 
