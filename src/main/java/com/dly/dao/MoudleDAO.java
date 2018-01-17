@@ -1,15 +1,15 @@
 package com.dly.dao;
 
+import com.dly.entity.Moudle_m;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
+public abstract interface MoudleDAO
+{
+  public abstract List<Moudle_m> getMoudleAll();
 
-import com.dly.entity.Moudle_m;
+  public abstract int deleteMoudleById(Integer paramInteger);
 
-public interface MoudleDAO {
-	public List<Moudle_m> getMoudleAll();
-	public int deleteMoudleById(Integer id);
-	public int editMoudleById(Moudle_m moudle) ;
-	public int addMoudle(Moudle_m moudle) ;
+  public abstract int editMoudleById(Moudle_m paramMoudle_m);
 
+  public abstract int addMoudle(Moudle_m paramMoudle_m);
 }

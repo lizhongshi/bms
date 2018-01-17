@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>轮播图</title>
+<link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.3.3/themes/default/easyui.css"></link>
+<link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.3.3/themes/icon.css"></link>
+<style type="text/css">
+
+	.clock {
+		float:right;
+	    width: 300px;
+	    height: 30px;
+	    padding-left: 20px;
+	    color: rgb(0, 76, 126);
+	    background: url(/static/images/clock.gif) no-repeat;
+	    font-size: 14px;
+	}
+	
+	.userInfo{
+		float:left;
+		padding-left: 20px;
+		padding-top: 30px;
+	}
+	
+</style>
+<script type="text/javascript" src="static/jquery-easyui-1.3.3/jquery.min.js"></script>
+<script type="text/javascript" src="static/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="static/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript">
+var url;
+function deletemoudle(){
+	var row=$('#dg').datagrid('getSelected');
+	if(row){
+		$.messager.confirm("系统提示","您确定要删除这条记录吗?",function(r){
+			if(r){
+				$.post('carousel/delete',{id:row.id},function(result){
+					console.log(result)
+					if(result.success){
+						$.messager.alert("系统提示","已成功删除这条记录!");
+						$("#dg").datagrid("reload");
+					}else{
+						$.messager.alert("系统提示",result.errorMsg);
+					}
+				},'json');
+			}
+		});
+	}
+}
+
+function newMoudle(){
+	$("#dlg").dialog('open').dialog('setTitle','添加文章');
+	$('#fm').form('clear');
+	url='carousel/add';
+}
+
+
+function editmoudle(){
+	var row=$('#dg').datagrid('getSelected');
+	if(row){
+		$("#dlg").dialog('open').dialog('setTitle','编辑文章');
+		$('#fm').form('load',row);
+		url='carousel/edit?id='+row.id+'';
+	}
+}
+
+
+function saveUser(){
+	$('#fm').form('submit',{
+		url:url,
+		onSubmit:function(){
+			return $(this).form('validate');
+		},
+		success:function(result){
+			console.log(result)
+			var result=eval('('+result+')');
+			
+			if(result>0){
+				$.messager.alert("系统提示",result.errorMsg);
+				return;
+			}else{
+				$.messager.alert("系统提示","保存成功");
+				$('#dlg').dialog('close');
+				$("#dg").datagrid("reload");
+			}
+		}
+	});
+}
+
+function Search(){
+	
+	
+	
+	$('#dg').datagrid({
+	    url:'carousel/all',
+		
+	});
+	
+	$("#dg").datagrid("reload");
+}
+	$(function(){
+		$("#istp").combobox({
+			onChange: function (n,o) {
+
+			}
+
+			});
+	})
+	
+	function clear(){
+		$('#moudle_search').combobox('clear');
+	}
+	
+	
+</script>
+</head>
+<body >
+<table id="dg" title="轮播图管理" class="easyui-datagrid" style="width:800px;height:365px"
+            
+            toolbar="#toolbar" pagination="true"
+            rownumbers="true" fitColumns="true" singleSelect="true">
+        <thead>
+            <tr>
+            	<th field="id" width="20px" >ID</th>
+                <th field="imageId" width="20px">图片id</th>
+                 <th field="ordered" width="20px">排序</th>
+                 <th field="groupId" width="20px">文章ID</th>
+            </tr>
+        </thead>
+    </table>
+    <div id="toolbar">
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newMoudle()">添加</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editmoudle()">编辑</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deletemoudle()">删除</a>
+        <div>
+			<a  class="easyui-linkbutton" iconCls="icon-search" onclick="Search()">搜索</a>
+		</div>
+        
+    </div>
+	
+	<div id="dlg" class="easyui-dialog" style="width:400px;height:550px;padding:10px 20px"
+            closed="true" buttons="#dlg-buttons">
+        <form id="fm" method="post">
+        	<table cellspacing="10px;">        		
+        		<tr id="imageId" >
+        			<td>图片id</td>
+        			<td><input  name="imageId" class="easyui-validatebox" validType="text"  style="width: 200px;"></td>
+        		</tr>
+        		<tr id="order"  >
+        			<td>顺序</td>
+        			<td><input  name="ordered" class="easyui-validatebox" validType="text"  style="width: 200px;"></td>
+        		</tr>
+        		<tr id="groupId"  >
+        			<td>文章ID</td>
+        			<td><input  name="groupId" class="easyui-validatebox" validType="text"  style="width: 200px;"></td>
+        		</tr>
+        	</table>
+        </form>
+	</div>
+    
+	<div id="dlg-buttons">
+		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveUser()">保存</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">关闭</a>
+	</div>
+
+
+</body>
+</html>

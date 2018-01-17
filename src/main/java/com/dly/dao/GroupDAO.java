@@ -1,18 +1,19 @@
 package com.dly.dao;
 
+import com.dly.entity.Group_m;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
+public abstract interface GroupDAO
+{
+  public abstract List<Group_m> test();
 
-import com.dly.entity.Group_m;
+  public abstract List<Group_m> getGroupByCountyIdAndMoudleIdAndLevelId(Group_m paramGroup_m);
 
+  public abstract List<Group_m> getAll();
 
-public interface GroupDAO {
-	public List<Group_m> test();
-	public List<Group_m>  getGroupByCountyIdAndMoudleIdAndLevelId(Group_m group);
-	public List<Group_m> getAll();
-	public int insertGroup(Group_m group);
-	public int deleteGroupById(Integer id);
-	public  int  editGroupById(Group_m group);
+  public abstract int insertGroup(Group_m paramGroup_m);
 
+  public abstract int deleteGroupById(Integer paramInteger);
+
+  public abstract int editGroupById(Group_m paramGroup_m);
 }

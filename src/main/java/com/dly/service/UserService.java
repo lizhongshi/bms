@@ -3,7 +3,9 @@ package com.dly.service;
 import com.dly.entity.Result;
 import com.dly.entity.TAdmin;
 
-public interface UserService {
-	public  Result login(TAdmin user);
-	public  Result register(TAdmin user);
+public abstract interface UserService
+{
+  public abstract Result login(TAdmin paramTAdmin);
+
+  public abstract Result register(TAdmin paramTAdmin);
 }

@@ -15,13 +15,13 @@
 		update t_moudle 
 		<set>
 			<if test="title!=null">
-			title=#{title}
+			title=#{title},
 			</if>
 			<if test="imageId!=null">
-			image_id=#{imageId}
+			image_id=#{imageId},
 			</if>
 			<if test="dsfUrl!=null">
-			dsf_url=#{dsfUrl}
+			dsf_url=#{dsfUrl},
 			</if>
 		</set>
 			where id=#{id}

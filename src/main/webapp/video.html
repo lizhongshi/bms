@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>后台管理-进销存管理系统</title>
+<link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.3.3/themes/default/easyui.css"></link>
+<link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.3.3/themes/icon.css"></link>
+<style type="text/css">
+
+
+	video{
+		width: 250px;
+		height: 250px;
+	}
+	
+</style>
+<script type="text/javascript" src="static/jquery-easyui-1.3.3/jquery.min.js"></script>
+<script type="text/javascript" src="static/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="static/js/jquery.form.min.js"></script>
+<script type="text/javascript" src="static/js/ajax.js"></script>
+<script type="text/javascript" src="static/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript">
+
+
+
+	
+	$(function(){
+		$("#videos").on('click','input',function(){
+			if(confirm('确定删除?')){
+			 var data=new Object();
+			 data.id=$(this).attr("id");
+			 data.path=$(this).attr("class");
+			 var result= ajax('video/delete','delete',JSON.stringify(data));
+			if(result.success){
+				alert(result.message)
+				getVideo();
+			}else{
+				alert(result.message)
+			}
+			}
+		})
+		
+		getVideo();
+	
+		
+		
+	})
+	
+	function  getVideo(){
+		$("#videos").empty();
+		$.ajax({
+		    url:'video/all',
+		    type:'GET', //GET
+		    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+		    contentType : 'application/json;charset=UTF-8', //contentType很重要   
+		    beforeSend:function(xhr){
+		      
+		        console.log('发送前')
+		    },
+		    success:function(data,textStatus,jqXHR){
+		      
+		       for (var i = 0; i < data.length; i++) {
+		    	   var video='';
+		    	   video+='<li class="img" >视频id:'+data[i].id+' <video  controls="controls"  src="'+'http://39.106.129.135:88'+data[i].url+'" ></video><input id="'+data[i].id+'" class="'+data[i].url+'"  type="button" value="删除" /> </li>`'
+		    	console.log(video)
+				$("#videos").append($(video));
+				
+			}
+		     
+		    },
+		    error:function(xhr,textStatus){
+		        console.log('错误')
+		        console.log(xhr)
+		        console.log(textStatus)
+		    },
+		    complete:function(){
+		        console.log('结束')
+		    }
+		})
+	}
+</script>
+</head>
+<body >
+<form id="serForm" action="http://39.106.129.135:8080/BMS/video/upload" method="post"  enctype="multipart/form-data">
+<h1>上传视频</h1>
+<input type="file" name="file">
+<p>标题</p><input type="text" name="title" />
+<input type="submit" />
+</form >
+<ul id="videos">
+
+</ul>
+
+</body>
+</html>

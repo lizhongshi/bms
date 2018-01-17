@@ -2,12 +2,13 @@ package com.dly.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 @Controller
-public class IndexController {
-	
-	@RequestMapping("/")
-	public String login() {
-		return "redirect:login.html";
-	}
-	
+public class IndexController
+{
+  @RequestMapping({"/"})
+  public String login()
+  {
+    return "redirect:login.html";
+  }
 }

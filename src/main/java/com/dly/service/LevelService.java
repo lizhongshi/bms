@@ -1,10 +1,9 @@
 package com.dly.service;
 
+import com.dly.entity.Level_m;
 import java.util.List;
 
-import com.dly.entity.Level_m;
-
-public interface LevelService {
- public List<Level_m> 	getLevelAll();
-
+public abstract interface LevelService
+{
+  public abstract List<Level_m> getLevelAll();
 }

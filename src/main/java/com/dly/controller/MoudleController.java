@@ -1,39 +1,41 @@
 package com.dly.controller;
 
+import com.dly.entity.TMoudle;
+import com.dly.service.MoudleService;
+import java.io.PrintStream;
 import javax.annotation.Resource;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dly.entity.Moudle_m;
-import com.dly.service.MoudleService;
 @RestController
-@RequestMapping(value="moudle")
-public class MoudleController {
-	@Resource
-	MoudleService moudleService;
-	@ResponseBody
-	@RequestMapping(value="all")
-	public Object getMoudleAll() {
-		return moudleService.findMoudleAll();
-	}
-	@RequestMapping(value="delete")
-	public Object deleteMoudleById(Integer id) {
-		
-		return moudleService.deleteMoudleById(id);
-	}
-	@RequestMapping(value="edit")
-	public Object editMoudleById(Moudle_m moudle) {
-		
-		return moudleService.editMoudleById(moudle);
-	}
-	@RequestMapping(value="add")
-	public Object addMoudle(Moudle_m moudle) {
-		System.out.println("添加模块参数"+moudle);
-		return moudleService.addMoudle(moudle);
-		
-	}
-	
+@RequestMapping({"moudle"})
+public class MoudleController
+{
 
+  @Resource
+  MoudleService moudleService;
+
+  @ResponseBody
+  @RequestMapping({"all"})
+  public Object getMoudleAll()
+  {
+    return this.moudleService.findMoudleAll();
+  }
+
+  @RequestMapping({"delete"})
+  public Object deleteMoudleById(Integer id) {
+    return this.moudleService.deleteMoudleById(id);
+  }
+  @RequestMapping({"edit"})
+  public Object editMoudleById(TMoudle moudle) {
+    System.out.println("修改moudle参数:" + moudle);
+
+    return this.moudleService.editMoudleById(moudle);
+  }
+  @RequestMapping({"add"})
+  public Object addMoudle(TMoudle moudle) {
+    System.out.println("添加模块参数" + moudle);
+    return this.moudleService.addMoudle(moudle);
+  }
 }

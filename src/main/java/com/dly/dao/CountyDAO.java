@@ -1,12 +1,9 @@
 package com.dly.dao;
 
+import com.dly.entity.County_m;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
-import com.dly.entity.County_m;
-
-
-public interface CountyDAO {
-	public List<County_m> getCountyAll();
-
+public abstract interface CountyDAO
+{
+  public abstract List<County_m> getCountyAll();
 }

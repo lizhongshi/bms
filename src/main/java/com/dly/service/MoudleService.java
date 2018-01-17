@@ -1,14 +1,16 @@
 package com.dly.service;
 
+import com.dly.entity.Result;
+import com.dly.entity.TMoudle;
 import java.util.List;
 
-import com.dly.entity.Moudle_m;
-import com.dly.entity.Result;
+public abstract interface MoudleService
+{
+  public abstract List<TMoudle> findMoudleAll();
 
-public interface MoudleService {
-	public List<Moudle_m>  findMoudleAll();
-	public Result deleteMoudleById(Integer id);
-	public Result editMoudleById(Moudle_m moudle) ;
-	public Result addMoudle(Moudle_m moudle) ;
+  public abstract Result deleteMoudleById(Integer paramInteger);
 
+  public abstract Result editMoudleById(TMoudle paramTMoudle);
+
+  public abstract Result addMoudle(TMoudle paramTMoudle);
 }

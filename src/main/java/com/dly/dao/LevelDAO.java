@@ -1,11 +1,9 @@
 package com.dly.dao;
 
+import com.dly.entity.Level_m;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
-
-import com.dly.entity.Level_m;
-
-public interface LevelDAO {
-	 public List<Level_m> 	getLevelAll();
+public abstract interface LevelDAO
+{
+  public abstract List<Level_m> getLevelAll();
 }

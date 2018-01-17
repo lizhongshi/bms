@@ -37,10 +37,15 @@ jpa:
       cache: false
 mybatis: 
   configuration:
-    mapUnderscoreToCamelCase: true
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:mapper/*.xml
+ 
+    
 jpush:
   config:
     appkey: c241f4c4694b35c7fc40bd7f
     masterSecret: 8e8afdd7a30f221bf681faea
+
+
    
       
