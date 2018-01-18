@@ -12,8 +12,35 @@ public class TGroup
   private Integer levelId;
   private Integer videoId;
   private String images;
+  private String moudleName;
+  private String level;
+  private String county;
+  
+  public String getMoudleName() {
+	return moudleName;
+}
 
-  public Integer getId()
+public void setMoudleName(String moudleName) {
+	this.moudleName = moudleName;
+}
+
+public String getLevel() {
+	return level;
+}
+
+public void setLevel(String level) {
+	this.level = level;
+}
+
+public String getCounty() {
+	return county;
+}
+
+public void setCounty(String county) {
+	this.county = county;
+}
+
+public Integer getId()
   {
     return this.id;
   }

@@ -6,8 +6,26 @@ public class TAdmin
   private String password;
   private String userName;
   private String salt;
+  private String newPassword1;
+  private String newPassword2;
+  
+  public String getNewPassword1() {
+	return newPassword1;
+}
 
-  public Integer getId()
+public void setNewPassword1(String newPassword1) {
+	this.newPassword1 = newPassword1;
+}
+
+public String getNewPassword2() {
+	return newPassword2;
+}
+
+public void setNewPassword2(String newPassword2) {
+	this.newPassword2 = newPassword2;
+}
+
+public Integer getId()
   {
     return this.id;
   }

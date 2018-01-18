@@ -3,9 +3,16 @@
 <mapper namespace="com.dly.dao.ImageDAO" >  
 
 
-	<select id="getImageAll"   resultType="com.dly.entity.Image">
-		select id,image_url imageUrl,image_name imageName from t_image where type='0'
+	<select id="getImageAll"  parameterType="com.dly.entity.Page" resultType="com.dly.entity.Image">
+		SELECT id,image_url imageUrl,image_name imageName FROM t_image WHERE TYPE='0' ORDER BY id DESC 
+		<if test="index!=null">
+		LIMIT #{index},#{size}
+		</if>
 	</select>
+	<insert id="addImage" parameterType="com.dly.entity.Image" >
+	 	INSERT INTO t_image (image_url,image_name,width,height,type,title)
+	VALUE (#{imageUrl},#{imageName},#{width},#{height},#{type},#{title})
+ 	</insert>
 	
 	
 </mapper>  

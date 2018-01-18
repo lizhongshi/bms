@@ -5,6 +5,7 @@
 <title>后台管理-进销存管理系统</title>
 <link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.3.3/themes/default/easyui.css"></link>
 <link rel="stylesheet" type="text/css" href="static/jquery-easyui-1.3.3/themes/icon.css"></link>
+<link rel="stylesheet" type="text/css" href="static/css/index.css"></link>
 <style type="text/css">
 
 	.clock {
@@ -23,27 +24,80 @@
 		padding-top: 30px;
 	}
 	.img img{
-		width: 350px;
-		height: 250px;
+		width: 250px;
+		height: 150px;
 	}
 	.img{
-		width: 450px;
-		height: 350px;
+		width: 250px;
+		height: 250px;
 		float: left;
+	}
+	span{
+		width: 50px;
+		height: 50px;
+		
+	}
+	p{
+	color: red;
+	
 	}
 	
 </style>
-<script type="text/javascript" src="static/jquery-easyui-1.3.3/jquery.min.js"></script>
+<script type="text/javascript" src="static/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="static/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="static/js/jquery.form.min.js"></script>
 <script type="text/javascript" src="static/js/ajax.js"></script>
+<script type="text/javascript" src="static/js/index.js"></script>
+<script type="text/javascript" src="static/js/stream-v1.js"></script>
+
 <script type="text/javascript" src="static/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
-
-
-
-	
+	var index=null;
+	var size=10;
+	var length=null;
+	var count=null;
 	$(function(){
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$("#btnImportOK").click(function () {
+			
+			             var formData = new FormData($("#fileForm")[0]);
+			            $.ajax({
+			               type: "POST",
+			                 data: formData,
+			                 url: "http://localhost/image/imageUpload",
+			                 contentType: false,
+			                 processData: false,
+			             }).success(function (data) {
+			                 if (data.success) {
+			                     alert(data.message);
+			                 } else {
+			                	 alert(data.message);
+			                 }
+			 
+			             }).error(function (data) {
+			                 alert('失败');
+			                 console.log(data);
+			             });
+			 
+			         });
+		
+		
+		
+		
+		
+		
+		
+		
 		$("#images").on('click','input',function(){
 			if(confirm('确定删除?')){
 				
@@ -61,13 +115,10 @@
 			}
 	
 		})	
-		getImage()
-	})
-	function getImage(){
-		$("#images").empty();
-		$.ajax({
+			$.ajax({
 		    url:'image/all',
 		    type:'GET', //GET
+		    data:{"index":index,"size":size},
 		    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
 		    contentType : 'application/json;charset=UTF-8', //contentType很重要   
 		    beforeSend:function(xhr){
@@ -75,10 +126,63 @@
 		        console.log('发送前')
 		    },
 		    success:function(data,textStatus,jqXHR){
-		       
+		    	length=data.length;
+		    	count=1;
+		    	$('#index').html(count+'/'+Math.ceil(length/size));
+		    
+		     
+		    },
+		    error:function(xhr,textStatus){
+		        console.log('错误')
+		        console.log(xhr)
+		        console.log(textStatus)
+		    },
+		    complete:function(){
+		        console.log('结束')
+		    }
+		})
+		$("span").click(function(){
+			//alert(count)
+			if($(this).html()=="上一页"){
+				if(count<=1){
+					
+					return ;
+				}
+				index-=10;
+				count--;
+				getImage();
+			}else{
+				if(count>=Math.ceil(length/size)){
+					
+					return ;
+				}
+				index+=10;
+				count++;
+				getImage();
+			}
+		})
+		index=0;
+		getImage();
+	})
+	function getImage(){
+		$("#images").empty();
+		
+		$.ajax({
+		    url:'image/all',
+		    type:'GET', //GET
+		    data:{"index":index,"size":size},
+		    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+		    contentType : 'application/json;charset=UTF-8', //contentType很重要   
+		    beforeSend:function(xhr){
+		      
+		        console.log('发送前')
+		    },
+		    success:function(data,textStatus,jqXHR){
+		    	
+		    	$('#index').html(count+'/'+Math.ceil(length/size));
 		       for (var i = 0; i < data.length; i++) {
 		    	   var img='';
-		    	   img+='<li class="img" > <img  alt="" src="'+'http://39.106.129.135:88'+data[i].imageUrl+'"  >图片id:'+data[i].id+' <input id="'+data[i].id+'" class="'+data[i].imageUrl+'"  type="button" value="删除" /> </li>`'
+		    	   img+='<li class="img" > <img  alt="" src="'+'http://39.106.210.162:88'+data[i].imageUrl+'"  >图片id:'+data[i].id+' <input id="'+data[i].id+'" class="'+data[i].imageUrl+'"  type="button" value="删除" /> </li>`'
 				console.log(img)
 				$("#images").append($(img));
 				
@@ -95,16 +199,49 @@
 		    }
 		})
 	}
+	function add() {
+
+		var content = "<tr><td>";
+
+		content += "<input type='file' name='file'><input type='button' value='Remove' onclick='remove(this)'>";
+
+		content +="</td></tr>"
+
+		$("#fileTable").append(content);
+
+		}
+		
 </script>
+<link href="http://hayageek.github.io/jQuery-Upload-File/4.0.11/uploadfile.css" rel="stylesheet">
+<script src="http://hayageek.github.io/jQuery-Upload-File/4.0.11/jquery.uploadfile.min.js"></script>
 </head>
 <body >
-<form id="serForm" action="http://39.106.129.135:8080/app/file/imageUpload" method="post"  enctype="multipart/form-data">
-<h1>上传图片</h1>
-<input type="file" name="file">
-<input type="text" name="type" value="1" style="display: none" />
-<input type="submit" />
+<h2>建议图片大小</h2>
+<p>banner：750x362px</p>
+<p>详情页图片：750x400px</p>
+<p>分类页：352x157px</p>
+<p>五大篇列表页：710x286px</p>
+<p>收藏页面图片：345x216px</p>
+
+  <form id="fileForm" action="" method="post" enctype="multipart/form-data">
+	<table id="fileTable">
+		<tr>
+			<td>
+				<input type="file" name="file"><input type="button" id="addButon" value="Add" onclick="add()">
+			</td>
+
+		</tr>
+
+	</table>
+ 	<input type="text" name="type" value="1" style="display: none" />
+   <input id="btnImportOK" type="button" value="上传" />
 </form>
-<ul id="images">
+ 
+
+<span id="upIdex">上一页</span>
+<span id="index"></span>
+<span id="downIdex">下一页</span>
+<ul  id="images">
 
 </ul>
 

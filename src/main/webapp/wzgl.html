@@ -30,7 +30,9 @@
 <script type="text/javascript" src="static/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
 
-
+$(function(){
+	Search();
+})
 var url;
 function deleteGroup(){
 	var row=$('#dg').datagrid('getSelected');
@@ -108,7 +110,7 @@ function Search(){
 </script>
 </head>
 <body >
-<table id="dg" title="文章管理" class="easyui-datagrid" style="width:1000px;height:365px"
+<table id="dg" title="文章管理" class="easyui-datagrid" style="width:1200px;height:665px"
             
             toolbar="#toolbar" pagination="true"
             rownumbers="true" fitColumns="true" singleSelect="true">
@@ -121,6 +123,9 @@ function Search(){
         		<th field="images" width="20px">轮播图id</th>
                  <th field="istp" width="8px">是否图片</th>
                  <th field="videoId" width="20px">视频id</th>
+                 <th field="moudleName" width="20px">模块名称</th>
+                 <th field="level" width="20px">等级</th>
+                 <th field="county" width="20px">地区</th>
             </tr>
         </thead>
     </table>

@@ -1,16 +1,20 @@
 package com.dly.service.impl;
 
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.dly.dao.ImageDAO;
 import com.dly.dao.TImageMapper;
 import com.dly.entity.Image;
+import com.dly.entity.Page;
 import com.dly.entity.Result;
 import com.dly.entity.Video;
 import com.dly.service.ImageService;
 import com.dly.util.FastdfsClient;
-import java.util.List;
-import javax.annotation.Resource;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
@@ -24,9 +28,9 @@ public class ImageServiceImpl
   @Resource
   TImageMapper tImageMapper;
 
-  public List<Image> getImageAll()
+  public List<Image> getImageAll(Page page)
   {
-    return this.imageDAO.getImageAll();
+    return this.imageDAO.getImageAll(page);
   }
 
   public Result deleteImage(Video video) {

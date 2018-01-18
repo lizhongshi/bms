@@ -43,7 +43,7 @@ public class GroupServiceImpl
 
   public List<TGroup> findGroupAll()
   {
-    List result = this.tGroupMapper.selectByExample(null);
+    List result = this.tGroupMapper.selectGroupAll();
     for (int i = 0; i < result.size(); i++) {
       TGroup g = (TGroup)result.get(i);
 

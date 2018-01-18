@@ -163,7 +163,7 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update t_admin
-    set id = #{record.id,jdbcType=INTEGER},
+    set 
       password = #{record.password,jdbcType=VARCHAR},
       user_name = #{record.userName,jdbcType=VARCHAR},
       salt = #{record.salt,jdbcType=VARCHAR}

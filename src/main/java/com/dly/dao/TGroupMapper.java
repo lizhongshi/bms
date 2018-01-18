@@ -18,6 +18,7 @@ public abstract interface TGroupMapper
   public abstract int insertSelective(TGroup paramTGroup);
 
   public abstract List<TGroup> selectByExample(TGroupExample paramTGroupExample);
+  public abstract List<TGroup> selectGroupAll();
 
   public abstract TGroup selectByPrimaryKey(Integer paramInteger);
 
@@ -28,4 +29,6 @@ public abstract interface TGroupMapper
   public abstract int updateByPrimaryKeySelective(TGroup paramTGroup);
 
   public abstract int updateByPrimaryKey(TGroup paramTGroup);
+  
+  
 }

@@ -33,6 +33,8 @@ $(function(){
 var content="<iframe frameborder=0 scrolling='auto' style='width:100%;height:99%' src='show.html'></iframe>";
 		
 		$("#tabs").tabs("add",{
+			
+			title:'数据展示',
 			closable:true,
 			content:content
 		});
@@ -70,6 +72,10 @@ function openTab(node){
 			url='video.html';
 		}else if(node.text=="轮播图管理"){
 			url='lbt.html';
+		}else if(node.text=="修改密码"){
+			url='changePass.html';
+		}else if(node.text=="数据展示"){
+			url='show.html';
 		}
 		var content="<iframe frameborder=0 scrolling='auto' style='width:100%;height:99%' src='"+url+"'></iframe>";
 		
@@ -113,6 +119,8 @@ function openTab(node){
 			<li>消息推送</li>
 			<li>视频管理</li>
 			<li>轮播图管理</li>
+			<li>数据展示</li>
+			<li>修改密码</li>
 		
 		</ul>
 	</div>

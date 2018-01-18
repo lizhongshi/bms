@@ -63,6 +63,7 @@ canvas{z-index:-1;position:absolute;}
 			    success:function(data,textStatus,jqXHR){
 			        console.log(data)
 			 	if(data.success){
+			 		localStorage.setItem("username",$("#userName").val()); 
 			 		window.location.href="main.html";
 			 	}else{
 			 		alert(data.message)

@@ -61,7 +61,7 @@
 		      
 		       for (var i = 0; i < data.length; i++) {
 		    	   var video='';
-		    	   video+='<li class="img" >视频id:'+data[i].id+' <video  controls="controls"  src="'+'http://39.106.129.135:88'+data[i].url+'" ></video><input id="'+data[i].id+'" class="'+data[i].url+'"  type="button" value="删除" /> </li>`'
+		    	   video+='<li class="img" >视频id:'+data[i].id+' <video  controls="controls"  src="'+'http://39.106.210.162:88'+data[i].url+'" ></video><input id="'+data[i].id+'" class="'+data[i].url+'"  type="button" value="删除" /> </li>`'
 		    	console.log(video)
 				$("#videos").append($(video));
 				
@@ -81,7 +81,7 @@
 </script>
 </head>
 <body >
-<form id="serForm" action="http://39.106.129.135:8080/BMS/video/upload" method="post"  enctype="multipart/form-data">
+<form id="serForm" action="http://39.106.210.162:8080/BMS/video/upload" method="post"  enctype="multipart/form-data">
 <h1>上传视频</h1>
 <input type="file" name="file">
 <p>标题</p><input type="text" name="title" />
