@@ -1,13 +1,19 @@
 server:
-  port: 80
-  context-path: /
+  port: 8080
+  context-path: /BMS
+logging:
+  level:
+    com.dly.dao.LevelDAO: debug
+    com.dly.dao.GroupDAO: debug
+    com.dly.dao.TVideoMapper: debug
+    com.dly.dao.TGroupMapper: debug
    
 spring:
     http:
       multipart:
         enabled: true
-        max-file-size: 100Mb 
-        max-request-size: 100Mb
+        max-file-size: 1024Mb 
+        max-request-size: 1024Mb 
     datasource:
         url: jdbc:mysql://39.106.210.162:3306/app?characterEncoding=utf-8&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
         username: lizhongshi
@@ -39,7 +45,11 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
   mapper-locations: classpath:mapper/*.xml
-
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: countSql
  
     
 jpush:

@@ -1,10 +1,7 @@
 package com.dly.controller;
 
-import com.dly.entity.Result;
-import com.dly.entity.Video;
-import com.dly.service.VideoService;
-import java.io.PrintStream;
 import javax.annotation.Resource;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.dly.entity.Page;
+import com.dly.entity.Result;
+import com.dly.entity.Video;
+import com.dly.service.VideoService;
 
 @RestController
 @RequestMapping({"video"})
@@ -22,9 +24,10 @@ public class VideoController
   VideoService videoService;
 
   @RequestMapping({"all"})
-  public Object getVideoAll()
+  public Object getVideoAll(Page page)
   {
-    return this.videoService.getVideoAll();
+	  System.out.println("分页"+page);
+    return this.videoService.getVideoAll(page);
   }
   @PostMapping(value={"upload"}, produces={"application/json;charset=UTF-8"})
   public Object uploadVideo(@RequestParam("file") MultipartFile file, String title) {

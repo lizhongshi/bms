@@ -10,4 +10,5 @@ public abstract interface UserService
 
   public abstract Result register(TAdmin paramTAdmin);
   public Result changePasswords(TAdmin admin);
+  public Result logout( TAdmin admin) ;
 }

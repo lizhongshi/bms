@@ -76,6 +76,16 @@ function openTab(node){
 			url='changePass.html';
 		}else if(node.text=="数据展示"){
 			url='show.html';
+		}else if(node.text=="退出登录"){
+			if(window.confirm('你确定要退出登录吗？')){
+                //alert("确定");
+			var result= ajax('personal/logout','get',null);
+			location.reload();
+                return true;
+             }else{
+                //alert("取消");
+                return false;
+            }
 		}
 		var content="<iframe frameborder=0 scrolling='auto' style='width:100%;height:99%' src='"+url+"'></iframe>";
 		
@@ -90,17 +100,19 @@ function openTab(node){
 	
 </script>
 </head>
+
 <body  class="easyui-layout" >
 	<div region="north" style="height: 72px;">
 			<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
-					<td width="381px" style="background:url(static/images/top_left.jpg)">
+					<td width="381px" style="background:url(static/images/top_left.png)">
 					</td>
 					<td style="background:url(static/images/top_center.jpg)">
 						<div id="userInfo" class="userInfo"></div>
 					</td>
 					<td valign="bottom" width="544px" style="background:url(static/images/top_right.jpg)">
 						<div id="clock" class="clock"></div>
+						
 					</td>
 				</tr>
 			</table>
@@ -121,7 +133,8 @@ function openTab(node){
 			<li>轮播图管理</li>
 			<li>数据展示</li>
 			<li>修改密码</li>
-		
+			<li>退出登录</li>
+			
 		</ul>
 	</div>
 		

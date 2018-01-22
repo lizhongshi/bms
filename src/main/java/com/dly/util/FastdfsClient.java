@@ -5,9 +5,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintStream;
 import java.util.Map;
 import java.util.UUID;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.csource.common.MyException;
@@ -18,6 +18,7 @@ import org.csource.fastdfs.StorageClient;
 import org.csource.fastdfs.StorageServer;
 import org.csource.fastdfs.TrackerClient;
 import org.csource.fastdfs.TrackerServer;
+import org.junit.Test;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -61,7 +62,9 @@ public class FastdfsClient
       }
 
     }
-
+//    NameValuePair[] nvp = { 
+//    	      new NameValuePair("age", "18"), 
+//    	      new NameValuePair("sex", "male") };
     fileIds = storageClient.upload_file(file.getBytes(), 
       file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1, file.getOriginalFilename().length()), nvp);
     log.info(Integer.valueOf(fileIds.length));
@@ -120,8 +123,8 @@ public class FastdfsClient
       e.printStackTrace();
     }
   }
-
-  public void testGetFileInfo()
+  @Test
+  public static void testGetFileInfo(String group, String url)
   {
     try
     {
@@ -133,7 +136,7 @@ public class FastdfsClient
 
       StorageClient storageClient = new StorageClient(trackerServer, storageServer);
 
-      FileInfo fi = storageClient.get_file_info("group1", "M00/00/00/wKgRcFV_08OAK_KCAAAA5fm_sy874.conf");
+      FileInfo fi = storageClient.get_file_info(group, url);
 
       System.out.println(fi.getSourceIpAddr());
 
@@ -148,8 +151,9 @@ public class FastdfsClient
       e.printStackTrace();
     }
   }
-
-  public void testGetFileMate()
+  @Test
+  
+  public void testGetFileMate(String group, String url)
   {
     try
     {
@@ -162,11 +166,13 @@ public class FastdfsClient
       StorageClient storageClient = new StorageClient(trackerServer, 
         storageServer);
 
-      NameValuePair[] nvps = storageClient.get_metadata("group1", "M00/00/00/wKgRcFV_08OAK_KCAAAA5fm_sy874.conf");
-
-      for (NameValuePair nvp : nvps)
-      {
-        System.out.println(nvp.getName() + ":" + nvp.getValue());
+      NameValuePair[] nvps = storageClient.get_metadata(group, url);
+      if(nvps!=null) {
+    	  
+    	  for (NameValuePair nvp : nvps)
+    	  {
+    		  System.out.println(nvp.getName() + ":" + nvp.getValue());
+    	  }
       }
 
     }
@@ -198,4 +204,8 @@ public class FastdfsClient
       e.printStackTrace();
     }
   }
+  
+  public static void main(String[] args) {
+	  testGetFileInfo("group3","M00/00/00/wKgAc1pjEz6AIUFlAARW5X6d5O8005.jpg");
+}
 }

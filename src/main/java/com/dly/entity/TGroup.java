@@ -15,8 +15,18 @@ public class TGroup
   private String moudleName;
   private String level;
   private String county;
+  private Long total;
   
-  public String getMoudleName() {
+ 
+public Long getTotal() {
+	return total;
+}
+
+public void setTotal(Long total) {
+	this.total = total;
+}
+
+public String getMoudleName() {
 	return moudleName;
 }
 
@@ -120,4 +130,12 @@ public Integer getId()
   public void setImages(String images) {
     this.images = images;
   }
+
+@Override
+public String toString() {
+	return "TGroup [id=" + id + ", title=" + title + ", text=" + text + ", moudleId=" + moudleId + ", imageId="
+			+ imageId + ", istp=" + istp + ", countyId=" + countyId + ", levelId=" + levelId + ", videoId=" + videoId
+			+ ", images=" + images + ", moudleName=" + moudleName + ", level=" + level + ", county=" + county + "]";
+}
+  
 }

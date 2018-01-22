@@ -1,19 +1,23 @@
 package com.dly.service.impl;
 
-import com.dly.dao.TVideoMapper;
-import com.dly.entity.Result;
-import com.dly.entity.TVideo;
-import com.dly.service.VideoService;
-import com.dly.util.FastdfsClient;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.Resource;
+
 import org.csource.common.MyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.dly.dao.TVideoMapper;
+import com.dly.entity.Page;
+import com.dly.entity.Result;
+import com.dly.entity.TVideo;
+import com.dly.service.VideoService;
+import com.dly.util.FastdfsClient;
 
 @Service
 @Transactional
@@ -24,10 +28,10 @@ public class VideoServiceImpl
   @Resource
   TVideoMapper tVideoMapper;
 
-  public List<TVideo> getVideoAll()
+  public List<TVideo> getVideoAll(Page page)
   {
     return 
-      this.tVideoMapper.selectByExample(null);
+      this.tVideoMapper.getVideoAll(page);
   }
 
   public Result upload(MultipartFile file, String title)

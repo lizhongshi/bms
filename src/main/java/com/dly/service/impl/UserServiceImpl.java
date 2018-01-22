@@ -90,4 +90,14 @@ public Result changePasswords(TAdmin admin) {
 	    
 	
 }
+
+@Override
+public Result logout(TAdmin admin) {
+	  Subject subject = SecurityUtils.getSubject();  
+	    if (subject.isAuthenticated()) {  
+	        subject.logout(); // session 会销毁，在SessionListener监听session销毁，清理权限缓存  
+	      
+	    }
+	return null;
+}
 }

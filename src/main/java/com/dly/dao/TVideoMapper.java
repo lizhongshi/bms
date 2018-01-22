@@ -1,9 +1,12 @@
 package com.dly.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.dly.entity.Page;
 import com.dly.entity.TVideo;
 import com.dly.entity.TVideoExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public abstract interface TVideoMapper
 {
@@ -28,4 +31,5 @@ public abstract interface TVideoMapper
   public abstract int updateByPrimaryKeySelective(TVideo paramTVideo);
 
   public abstract int updateByPrimaryKey(TVideo paramTVideo);
+  public List<TVideo> getVideoAll(Page page);
 }

@@ -2,9 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dly.dao.TGroupMapper">
 
-	<select id="selectGroupAll" resultType="com.dly.entity.TGroup">
+	<select id="selectGroupAll" parameterType="com.dly.entity.Page" resultType="com.dly.entity.TGroup">
 		
   SELECT g.*,m.title moudle_name,l.`level`,c.`name` county  FROM t_group g LEFT JOIN t_moudle m ON g.`moudle_id`=m.id LEFT  JOIN t_level l ON g.`level_id`=l.`id` LEFT JOIN t_county c ON g.`county_id`=c.`id`
+	LIMIT 0,20
+	<if test="index!=null">
+		LIMIT #{index},#{size}
+		</if>
 	</select>
 
   <resultMap id="BaseResultMap" type="com.dly.entity.TGroup">

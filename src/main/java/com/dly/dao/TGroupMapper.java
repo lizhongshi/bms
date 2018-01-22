@@ -1,9 +1,12 @@
 package com.dly.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.dly.entity.Page;
 import com.dly.entity.TGroup;
 import com.dly.entity.TGroupExample;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public abstract interface TGroupMapper
 {
@@ -18,7 +21,7 @@ public abstract interface TGroupMapper
   public abstract int insertSelective(TGroup paramTGroup);
 
   public abstract List<TGroup> selectByExample(TGroupExample paramTGroupExample);
-  public abstract List<TGroup> selectGroupAll();
+  public abstract List<TGroup> selectGroupAll(Page page);
 
   public abstract TGroup selectByPrimaryKey(Integer paramInteger);
 

@@ -3,12 +3,12 @@ package com.dly.controller;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dly.entity.ChangePassword;
 import com.dly.entity.TAdmin;
 import com.dly.service.UserService;
 
@@ -34,6 +34,11 @@ public class UserController
   @ResponseBody
   public Object changePassword( TAdmin admin) {
 	  return userService.changePasswords(admin);
+  }
+  @GetMapping(value={"logout"}, produces={"application/json;charset=UTF-8"})
+  @ResponseBody
+  public Object logout( TAdmin admin) {
+	  return userService.logout(admin);
   }
 
 }
