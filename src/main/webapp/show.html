@@ -45,26 +45,52 @@ $(function(){
 			 continue;
 		 }
 		 if(result[i].title=="非遗篇"){
-			 var sum=result[i].sum+array[0].sum+array[1].sum;
-		
-			 
+			 var sum=result[i].sum;
+			var imageSum=parseInt(array[1].imageCount)+parseInt(result[i].imageCount)+parseInt(array[0].imageCount);
+			var videoSum=parseInt(array[1].videoCount)+parseInt(result[i].videoCount)+parseInt(array[0].videoCount);
+			var groupSum=parseInt(array[1].groupCount)+parseInt(result[i].groupCount)+parseInt(array[0].groupCount);
+			var Sum=parseInt(array[1].sum)+parseInt(result[i].sum)+parseInt(array[0].sum);
 			 		tr+='<tr>'
 					+'<td>'+result[i].title+'</td>'
 					+'<td>'+result[i].imageCount+'张</td>'
 					+'<td>'+result[i].videoCount+'个</td>'
 					+'<td>'+result[i].groupCount+'条</td>'
 					+'<td>'+sum+'条</td>'
-					+'<td>其中'+array[0].title+array[0].sum+'条</td>'
-					+'<td>其中'+array[1].title+array[1].sum+'条</td>'
-					+'<tr></tr>'
+					+'</tr>'
+					+'<tr>'
+					+'<td>'+array[0].title+'</td>'
+					+'<td>'+array[0].imageCount+'张</td>'
+					+'<td>'+array[0].videoCount+'个</td>'
+					+'<td>'+array[0].groupCount+'条</td>'
+					+'<td>'+array[0].sum+'条</td>'
+					+'</tr>'
+					+'<tr>'
+					+'<td>'+array[1].title+'</td>'
+					+'<td>'+array[1].imageCount+'张</td>'
+					+'<td>'+array[1].videoCount+'个</td>'
+					+'<td>'+array[1].groupCount+'条</td>'
+					+'<td>'+array[1].sum+'条</td>'
+					+'</tr>'
+					
+					+'<tr>'
+					+'<td>非遗总计</td>'
+					+'<td>'+imageSum+'张</td>'
+					+'<td>'+videoSum+'个</td>'
+					+'<td>'+groupSum+'条</td>'
+					+'<td>'+Sum+'条</td>'
+					+'</tr>'
 		 }else{
-			 
+			 var title=result[i].title;
+			 var imageCount=  (result[i].imageCount==null?0:result[i].imageCount);
+			 var videoCount=  (result[i].videoCount==null?0:result[i].videoCount);
+			 var groupCount= (result[i].groupCount==null?0:result[i].groupCount);
+			 var sum=(result[i].sum==null?0:result[i].sum);
 			tr+='<tr>'
-			+'<td>'+result[i].title+'</td>'
-			+'<td>'+result[i].imageCount+'张</td>'
-			+'<td>'+result[i].videoCount+'个</td>'
-			+'<td>'+result[i].groupCount+'条</td>'
-			+'<td>'+result[i].sum+'条</td>'
+			+'<td>'+title+'</td>'
+			+'<td>'+imageCount+'张</td>'
+			+'<td>'+videoCount+'个</td>'
+			+'<td>'+groupCount+'条</td>'
+			+'<td>'+sum+'条</td>'
 			+'<tr></tr>'
 		 }
 		 

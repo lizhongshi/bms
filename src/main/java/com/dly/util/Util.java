@@ -6,7 +6,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 public class Util
 {
-  public static synchronized String getUUID()
+  public static  String getUUID()
   {
     String uuid = UUID.randomUUID().toString().replaceAll("-", "");
     return uuid;
