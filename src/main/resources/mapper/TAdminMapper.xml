@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dly.dao.TAdminMapper">
-  <resultMap id="BaseResultMap" type="com.dly.entity.TAdmin">
+<mapper namespace="com.dly.explain.dao.TAdminMapper">
+  <resultMap id="BaseResultMap" type="com.dly.explain.entity.TAdmin">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
@@ -68,7 +68,7 @@
   <sql id="Base_Column_List">
     id, password, user_name, salt
   </sql>
-  <select id="selectByExample" parameterType="com.dly.entity.TAdminExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.dly.explain.entity.TAdminExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -92,19 +92,19 @@
     delete from t_admin
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.dly.entity.TAdminExample">
+  <delete id="deleteByExample" parameterType="com.dly.explain.entity.TAdminExample">
     delete from t_admin
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.dly.entity.TAdmin">
+  <insert id="insert" parameterType="com.dly.explain.entity.TAdmin">
     insert into t_admin (id, password, user_name, 
       salt)
     values (#{id,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
       #{salt,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.dly.entity.TAdmin">
+  <insert id="insertSelective" parameterType="com.dly.explain.entity.TAdmin">
     insert into t_admin
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -135,7 +135,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.dly.entity.TAdminExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.dly.explain.entity.TAdminExample" resultType="java.lang.Long">
     select count(*) from t_admin
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -163,7 +163,7 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update t_admin
-    set 
+    set id = #{record.id,jdbcType=INTEGER},
       password = #{record.password,jdbcType=VARCHAR},
       user_name = #{record.userName,jdbcType=VARCHAR},
       salt = #{record.salt,jdbcType=VARCHAR}
@@ -171,7 +171,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.dly.entity.TAdmin">
+  <update id="updateByPrimaryKeySelective" parameterType="com.dly.explain.entity.TAdmin">
     update t_admin
     <set>
       <if test="password != null">
@@ -186,7 +186,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.dly.entity.TAdmin">
+  <update id="updateByPrimaryKey" parameterType="com.dly.explain.entity.TAdmin">
     update t_admin
     set password = #{password,jdbcType=VARCHAR},
       user_name = #{userName,jdbcType=VARCHAR},

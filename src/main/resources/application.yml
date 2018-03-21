@@ -1,21 +1,40 @@
 server:
-  port: 8080
-  context-path: /BMS
+  port: 80
+  context-path: /
 logging:
+  path: D:/
   level:
-    com.dly.dao.LevelDAO: debug
-    com.dly.dao.GroupDAO: debug
-    com.dly.dao.TVideoMapper: debug
-    com.dly.dao.TGroupMapper: debug
-   
+    com.dly.explain.dao.TExplainMapper: debug
+    com.dly.explain.dao.TExplain6Mapper: debug
+
 spring:
+    rabbitmq:
+        addresses: 127.0.0.1
+        host: 5672
+        username: guest
+        password:  guest
+        publisher-confirms: true
+        virtual-host: /
+    redis:
+        host: 39.106.210.162
+        port: 6379
+        database: 1
+        password: 200814
+        timeout: 30000
+        pool:
+          max-active: 100
+          max-wait: 2000
+          max-idle: 50
+          min-idle: 0
+        
+        
     http:
       multipart:
         enabled: true
         max-file-size: 1024Mb 
         max-request-size: 1024Mb 
     datasource:
-        url: jdbc:mysql://39.106.210.162:3306/app?characterEncoding=utf-8&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+        url: jdbc:mysql://localhost:3306/explain?characterEncoding=utf-8&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Hongkong
         username: lizhongshi
         password: LiZhongShi0917!
         type: com.alibaba.druid.pool.DruidDataSource 
@@ -34,31 +53,17 @@ spring:
         testOnReturn: false
         poolPreparedStatements: true
         maxOpenPreparedStatements: 20
-  
-
-jpa:
-     hibernate.ddl-auto: update
-     show-sql: true
-     thymeleaf:
-      cache: false
 mybatis: 
   configuration:
     map-underscore-to-camel-case: true
   mapper-locations: classpath:mapper/*.xml
-pagehelper:
-  helper-dialect: mysql
-  reasonable: true
-  support-methods-arguments: true
-  params: countSql
- 
-    
-jpush:
-  config:
-    appkey: c241f4c4694b35c7fc40bd7f
-    masterSecret: 8e8afdd7a30f221bf681faea
-
-
-
-
-   
+#阿里云短信
+sms:
+  product: Dysmsapi
+  domain: dysmsapi.aliyuncs.com
+  accessKeyId: LTAIDX5dKBBc0sxM
+  accessKeySecret: QU17d47YzickKIxZcKOtepf1S0gjai
+  templateCode: SMS_115930121
+  signName: 旅游日记
+  
       

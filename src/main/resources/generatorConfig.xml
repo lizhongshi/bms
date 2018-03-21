@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         </commentGenerator>  
   
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"  
-            connectionURL="jdbc:mysql://39.106.210.162:3306/app" 
+            connectionURL="jdbc:mysql://localhost:3306/explain" 
             userId="lizhongshi"  
             password="LiZhongShi0917!">  
         </jdbcConnection>  
@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         </javaTypeResolver>  
   
         <!-- javaModelGenerator是模型的生成信息，这里将指定这些Java model类的生成路径； -->  
-        <javaModelGenerator targetPackage="com.dly.entity"  
+        <javaModelGenerator targetPackage="com.dly.explain.entity"  
             targetProject="src/main/java">  
             <property name="enableSubPackages" value="true" />  
             <property name="trimStrings" value="true" />  
@@ -38,13 +38,21 @@ PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
   
         <!-- javaClientGenerator是应用接口的生成信息； -->  
         <javaClientGenerator type="XMLMAPPER"  
-            targetPackage="com.dly.dao" targetProject="src/main/java">  
+            targetPackage="com.dly.explain.dao" targetProject="src/main/java">  
             <property name="enableSubPackages" value="true" />  
         </javaClientGenerator>  
   
         <!-- table是用户指定的被生成相关信息的表，它必须在指定的jdbc连接中已经被建立。?是否可以多个 -->  
   
-        <table tableName="t_carousel"></table>
+       <!--  <table tableName="t_fenrun_mx" >
+        	<columnOverride column="shouchi1" javaType="java.lang.String" jdbcType="VARCHAR"></columnOverride>
+        	<columnOverride column="shouchi2" javaType="java.lang.String" jdbcType="VARCHAR"></columnOverride>
+        	<columnOverride column="sfz1" javaType="java.lang.String" jdbcType="VARCHAR"></columnOverride>
+        	<columnOverride column="sfz2" javaType="java.lang.String" jdbcType="VARCHAR"></columnOverride>
+        </table> -->
+        <table tableName="t_news">
+        <columnOverride column="icon" javaType="java.lang.String" jdbcType="VARCHAR"></columnOverride>
+        </table>
         <!-- <table tableName="app_bind_status" domainObjectName="AppBindStatus"   
             enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"   
             enableSelectByExample="false" selectByExampleQueryId="false"></table> -->  

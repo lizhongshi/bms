@@ -27,6 +27,46 @@
 	</properties>
 
 	<dependencies>
+	<!-- https://mvnrepository.com/artifact/log4j/log4j -->
+
+	
+		<!-- 短信 -->
+	<dependency>  
+		    <groupId>com.aliyun</groupId>  
+		    <artifactId>aliyun-java-sdk-core</artifactId>  
+		    <version>2.4.2</version>  
+		</dependency>  
+		
+		<dependency>  
+		    <groupId>com.aliyun</groupId>  
+		    <artifactId>aliyun-java-sdk-dysmsapi</artifactId>  
+		    <version>1.0.0</version>  
+		</dependency>  
+		<dependency>
+	        <groupId>org.apdplat</groupId>
+	        <artifactId>word</artifactId>
+	        <version>1.2</version>
+    	</dependency>
+		<dependency>  
+		    <groupId>com.aliyun</groupId>  
+		    <artifactId>aliyun-java-sdk-sms</artifactId>  
+		    <version>3.0.0-rc1</version>  
+		</dependency>
+	<!-- jwt  token验证-->
+	<dependency> 
+		<groupId>com.auth0</groupId>
+		<artifactId>java-jwt</artifactId>
+		<version>3.1.0</version>
+	</dependency>
+	<dependency>
+		<groupId>io.jsonwebtoken</groupId>
+		<artifactId>jjwt</artifactId>
+		<version>0.6.0</version>
+	</dependency>
+	<dependency>  
+            <groupId>redis.clients</groupId>  
+            <artifactId>jedis</artifactId>  
+            </dependency>  
 		<!-- https://mvnrepository.com/artifact/junit/junit -->
 	<dependency>
 	    <groupId>junit</groupId>
@@ -34,11 +74,12 @@
 	    <version>4.12</version>
 	    <scope>test</scope>
 	</dependency>
-	<dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>1.1.1</version>
-        </dependency>
+	  <dependency>
+	            <groupId>com.github.pagehelper</groupId>
+	            <artifactId>pagehelper-spring-boot-starter</artifactId>
+	            <version>1.2.3</version>
+	        </dependency> 
+          
 	<!-- 文件上传 -->
 	<dependency>
 	    <groupId>commons-fileupload</groupId>
@@ -62,6 +103,43 @@
 	    <artifactId>spring-boot-configuration-processor</artifactId>  
 	    <optional>true</optional>  
 	</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis -->
+	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-data-redis</artifactId>
+	    </dependency>
+	   <dependency>  
+	    <groupId>org.springframework.boot</groupId>  
+	    <artifactId>spring-boot-starter-aop</artifactId>  
+		</dependency> 
+		<dependency>  
+			<groupId>org.springframework.boot</groupId>  
+			<artifactId>spring-boot-starter-amqp</artifactId>  
+		</dependency>
+	<dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.15</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.mail</groupId>
+                    <artifactId>mail</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.jms</groupId>
+                    <artifactId>jms</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.sun.jdmk</groupId>
+                    <artifactId>jmxtools</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.sun.jmx</groupId>
+                    <artifactId>jmxri</artifactId>
+                </exclusion>
+            </exclusions>
+            <scope>runtime</scope>
+        </dependency>
 	<dependency>
         <groupId>cn.jpush.api</groupId>
         <artifactId>jiguang-common</artifactId>
@@ -86,6 +164,10 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -135,7 +217,14 @@
 		    <groupId>com.alibaba</groupId>
 		    <artifactId>fastjson</artifactId>
 		    <version>1.1.36</version>
-		  	</dependency>	
+		 </dependency>	
+		 
+		 <dependency>
+		    <groupId>com.aliyun.api.gateway</groupId>
+		    <artifactId>java.demo</artifactId>
+		    <version>1.0-SNAPSHOT</version>
+		  	</dependency>	 	
+		  
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>

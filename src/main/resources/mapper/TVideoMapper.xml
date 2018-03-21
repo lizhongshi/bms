@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dly.dao.TVideoMapper">
-
-<select id="getVideoAll" parameterType="com.dly.entity.Page" resultType="com.dly.entity.TVideo">
-	select * from t_video 
-		ORDER BY id DESC
-		<if test="index!=null">
-		LIMIT #{index},#{size}
-		</if>
-</select>
-  <resultMap id="BaseResultMap" type="com.dly.entity.TVideo">
+<mapper namespace="com.dly.explain.dao.TVideoMapper">
+  <resultMap id="BaseResultMap" type="com.dly.explain.entity.TVideo">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="creat_date" jdbcType="TIMESTAMP" property="creatDate" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.dly.explain.entity.TVideo">
+    <result column="text" jdbcType="LONGVARCHAR" property="text" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -74,9 +69,28 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, url, title, creat_date
+    id, url, name, title
   </sql>
-  <select id="selectByExample" parameterType="com.dly.entity.TVideoExample" resultMap="BaseResultMap">
+  <sql id="Blob_Column_List">
+    text
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.dly.explain.entity.TVideoExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_video
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.dly.explain.entity.TVideoExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -90,9 +104,11 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from t_video
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -100,19 +116,19 @@
     delete from t_video
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.dly.entity.TVideoExample">
+  <delete id="deleteByExample" parameterType="com.dly.explain.entity.TVideoExample">
     delete from t_video
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.dly.entity.TVideo">
-    insert into t_video (id, url, title, 
-      creat_date)
-    values (#{id,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
-      #{creatDate,jdbcType=TIMESTAMP})
+  <insert id="insert" parameterType="com.dly.explain.entity.TVideo">
+    insert into t_video (id, url, name, 
+      title, text)
+    values (#{id,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{text,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.dly.entity.TVideo">
+  <insert id="insertSelective" parameterType="com.dly.explain.entity.TVideo">
     insert into t_video
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -121,11 +137,14 @@
       <if test="url != null">
         url,
       </if>
+      <if test="name != null">
+        name,
+      </if>
       <if test="title != null">
         title,
       </if>
-      <if test="creatDate != null">
-        creat_date,
+      <if test="text != null">
+        text,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -135,15 +154,18 @@
       <if test="url != null">
         #{url,jdbcType=VARCHAR},
       </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
       </if>
-      <if test="creatDate != null">
-        #{creatDate,jdbcType=TIMESTAMP},
+      <if test="text != null">
+        #{text,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.dly.entity.TVideoExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.dly.explain.entity.TVideoExample" resultType="java.lang.Long">
     select count(*) from t_video
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -158,13 +180,27 @@
       <if test="record.url != null">
         url = #{record.url,jdbcType=VARCHAR},
       </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
       <if test="record.title != null">
         title = #{record.title,jdbcType=VARCHAR},
       </if>
-      <if test="record.creatDate != null">
-        creat_date = #{record.creatDate,jdbcType=TIMESTAMP},
+      <if test="record.text != null">
+        text = #{record.text,jdbcType=LONGVARCHAR},
       </if>
     </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update t_video
+    set id = #{record.id,jdbcType=INTEGER},
+      url = #{record.url,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      text = #{record.text,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -173,32 +209,43 @@
     update t_video
     set id = #{record.id,jdbcType=INTEGER},
       url = #{record.url,jdbcType=VARCHAR},
-      title = #{record.title,jdbcType=VARCHAR},
-      creat_date = #{record.creatDate,jdbcType=TIMESTAMP}
+      name = #{record.name,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.dly.entity.TVideo">
+  <update id="updateByPrimaryKeySelective" parameterType="com.dly.explain.entity.TVideo">
     update t_video
     <set>
       <if test="url != null">
         url = #{url,jdbcType=VARCHAR},
       </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
       </if>
-      <if test="creatDate != null">
-        creat_date = #{creatDate,jdbcType=TIMESTAMP},
+      <if test="text != null">
+        text = #{text,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.dly.entity.TVideo">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.dly.explain.entity.TVideo">
     update t_video
     set url = #{url,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
-      creat_date = #{creatDate,jdbcType=TIMESTAMP}
+      text = #{text,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dly.explain.entity.TVideo">
+    update t_video
+    set url = #{url,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

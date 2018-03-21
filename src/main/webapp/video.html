@@ -36,7 +36,7 @@
 <script type="text/javascript">
 
 var index=null;
-var size=3;
+var size=1;
 var length=null;
 var count=null;
 
@@ -50,8 +50,9 @@ var count=null;
            $.ajax({
               type: "POST",
                 data: formData,
-                url: "http://localhost:8080/BMS/video/upload",
+                url: "../api/video/upload",
                 contentType: false,
+                async:false,
                 processData: false,
             }).success(function (data) {
                 if (data.success) {
@@ -71,7 +72,7 @@ var count=null;
 
         });
 		$.ajax({
-		    url:'video/all',
+		    url:'/api/video/all',
 		    type:'GET', //GET
 		    data:{"index":index,"size":size},
 		    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
@@ -101,8 +102,8 @@ var count=null;
 			if(confirm('确定删除?')){
 			 var data=new Object();
 			 data.id=$(this).attr("id");
-			 data.path=$(this).attr("class");
-			 var result= ajax('video/delete','delete',JSON.stringify(data));
+			 data.url=$(this).attr("class");
+			 var result= ajax('/api/video','delete',JSON.stringify(data));
 			if(result.success){
 				alert(result.message)
 				getVideo();
@@ -156,7 +157,7 @@ var count=null;
 	function  getVideo(){
 		$("#videos").empty();
 		$.ajax({
-		    url:'video/all',
+		    url:'api/video/all',
 		    data:{"index":index,"size":size},
 		    type:'GET', //GET
 		    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
@@ -169,7 +170,7 @@ var count=null;
 		    	$('#index').html(count+'/'+Math.ceil(length/size));
 		       for (var i = 0; i < data.length; i++) {
 		    	   var video='';
-		    	   video+='<li class="img" ><video  controls="controls"  src="'+'http://39.106.210.162:88'+data[i].url+'" ></video><p>标题:'+data[i].title+'</p><p>id:'+data[i].id+'</p><input id="'+data[i].id+'" class="'+data[i].url+'"  type="button" value="删除" /> </li>`'
+		    	   video+='<li class="img" ><video  controls="controls"  src="'+'http://localhost/static/videoUpload/'+data[i].url+'" ></video><p>标题:'+data[i].title+'</p><p>id:'+data[i].id+'</p><input id="'+data[i].id+'" class="'+data[i].url+'"  type="button" value="删除" /> </li>`'
 		    	console.log(video)
 				$("#videos").append($(video));
 				

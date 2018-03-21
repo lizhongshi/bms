@@ -1,26 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dly.dao.TUserMapper">
-  <resultMap id="BaseResultMap" type="com.dly.entity.TUser">
-    <id column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
+<mapper namespace="com.dly.explain.dao.TUserMapper">
+
+<select id="getUserInfo" parameterType="com.dly.explain.vo.UserInfo" resultType="com.dly.explain.vo.UserInfo">
+	SELECT icon_url,nickname,area,language FROM t_user WHERE user_id=${userId}
+</select>
+  <resultMap id="BaseResultMap" type="com.dly.explain.entity.TUser">
+    <id column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
-    <result column="salt" jdbcType="VARCHAR" property="salt" />
-    <result column="tokenid" jdbcType="VARCHAR" property="tokenid" />
-    <result column="phone" jdbcType="VARCHAR" property="phone" />
-    <result column="weixin" jdbcType="VARCHAR" property="weixin" />
-    <result column="qq" jdbcType="VARCHAR" property="qq" />
-    <result column="struts" jdbcType="VARCHAR" property="struts" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="icon_url" jdbcType="VARCHAR" property="iconUrl" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
     <result column="creation_time" jdbcType="TIMESTAMP" property="creationTime" />
-    <result column="birth_date" jdbcType="DATE" property="birthDate" />
-    <result column="sex" jdbcType="VARCHAR" property="sex" />
-    <result column="id" jdbcType="INTEGER" property="id" />
-    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
-    <result column="true_name" jdbcType="VARCHAR" property="trueName" />
-    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="language" jdbcType="VARCHAR" property="language" />
+    <result column="is_vip" jdbcType="BIT" property="isVip" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -81,10 +76,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    user_id, username, password, nickname, salt, tokenid, phone, weixin, qq, struts, 
-    email, icon_url, creation_time, birth_date, sex, id, remarks, true_name, user_name
+    user_id, password, nickname, icon, creation_time, salt, phone, area, language, is_vip
   </sql>
-  <select id="selectByExample" parameterType="com.dly.entity.TUserExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.dly.explain.entity.TUserExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -98,46 +92,37 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_user
-    where user_id = #{userId,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from t_user
-    where user_id = #{userId,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.dly.entity.TUserExample">
+  <delete id="deleteByExample" parameterType="com.dly.explain.entity.TUserExample">
     delete from t_user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.dly.entity.TUser">
-    insert into t_user (user_id, username, password, 
-      nickname, salt, tokenid, 
-      phone, weixin, qq, 
-      struts, email, icon_url, 
-      creation_time, birth_date, sex, 
-      id, remarks, true_name, 
-      user_name)
-    values (#{userId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{nickname,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{tokenid,jdbcType=VARCHAR}, 
-      #{phone,jdbcType=VARCHAR}, #{weixin,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, 
-      #{struts,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{iconUrl,jdbcType=VARCHAR}, 
-      #{creationTime,jdbcType=TIMESTAMP}, #{birthDate,jdbcType=DATE}, #{sex,jdbcType=VARCHAR}, 
-      #{id,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR}, #{trueName,jdbcType=VARCHAR}, 
-      #{userName,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.dly.explain.entity.TUser">
+    insert into t_user (user_id, password, nickname, 
+      icon, creation_time, salt, 
+      phone, area, language, 
+      is_vip)
+    values (#{userId,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
+      #{icon,jdbcType=VARCHAR}, #{creationTime,jdbcType=TIMESTAMP}, #{salt,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, 
+      #{isVip,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.dly.entity.TUser">
+  <insert id="insertSelective" parameterType="com.dly.explain.entity.TUser">
     insert into t_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">
         user_id,
-      </if>
-      <if test="username != null">
-        username,
       </if>
       <if test="password != null">
         password,
@@ -145,58 +130,31 @@
       <if test="nickname != null">
         nickname,
       </if>
-      <if test="salt != null">
-        salt,
-      </if>
-      <if test="tokenid != null">
-        tokenid,
-      </if>
-      <if test="phone != null">
-        phone,
-      </if>
-      <if test="weixin != null">
-        weixin,
-      </if>
-      <if test="qq != null">
-        qq,
-      </if>
-      <if test="struts != null">
-        struts,
-      </if>
-      <if test="email != null">
-        email,
-      </if>
-      <if test="iconUrl != null">
-        icon_url,
+      <if test="icon != null">
+        icon,
       </if>
       <if test="creationTime != null">
         creation_time,
       </if>
-      <if test="birthDate != null">
-        birth_date,
+      <if test="salt != null">
+        salt,
       </if>
-      <if test="sex != null">
-        sex,
+      <if test="phone != null">
+        phone,
       </if>
-      <if test="id != null">
-        id,
+      <if test="area != null">
+        area,
       </if>
-      <if test="remarks != null">
-        remarks,
+      <if test="language != null">
+        language,
       </if>
-      <if test="trueName != null">
-        true_name,
-      </if>
-      <if test="userName != null">
-        user_name,
+      <if test="isVip != null">
+        is_vip,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
+        #{userId,jdbcType=VARCHAR},
       </if>
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
@@ -204,54 +162,30 @@
       <if test="nickname != null">
         #{nickname,jdbcType=VARCHAR},
       </if>
-      <if test="salt != null">
-        #{salt,jdbcType=VARCHAR},
-      </if>
-      <if test="tokenid != null">
-        #{tokenid,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null">
-        #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="weixin != null">
-        #{weixin,jdbcType=VARCHAR},
-      </if>
-      <if test="qq != null">
-        #{qq,jdbcType=VARCHAR},
-      </if>
-      <if test="struts != null">
-        #{struts,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null">
-        #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="iconUrl != null">
-        #{iconUrl,jdbcType=VARCHAR},
+      <if test="icon != null">
+        #{icon,jdbcType=VARCHAR},
       </if>
       <if test="creationTime != null">
         #{creationTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="birthDate != null">
-        #{birthDate,jdbcType=DATE},
+      <if test="salt != null">
+        #{salt,jdbcType=VARCHAR},
       </if>
-      <if test="sex != null">
-        #{sex,jdbcType=VARCHAR},
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
       </if>
-      <if test="remarks != null">
-        #{remarks,jdbcType=VARCHAR},
+      <if test="language != null">
+        #{language,jdbcType=VARCHAR},
       </if>
-      <if test="trueName != null">
-        #{trueName,jdbcType=VARCHAR},
-      </if>
-      <if test="userName != null">
-        #{userName,jdbcType=VARCHAR},
+      <if test="isVip != null">
+        #{isVip,jdbcType=BIT},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.dly.entity.TUserExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.dly.explain.entity.TUserExample" resultType="java.lang.Long">
     select count(*) from t_user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -261,10 +195,7 @@
     update t_user
     <set>
       <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=INTEGER},
-      </if>
-      <if test="record.username != null">
-        username = #{record.username,jdbcType=VARCHAR},
+        user_id = #{record.userId,jdbcType=VARCHAR},
       </if>
       <if test="record.password != null">
         password = #{record.password,jdbcType=VARCHAR},
@@ -272,50 +203,26 @@
       <if test="record.nickname != null">
         nickname = #{record.nickname,jdbcType=VARCHAR},
       </if>
-      <if test="record.salt != null">
-        salt = #{record.salt,jdbcType=VARCHAR},
-      </if>
-      <if test="record.tokenid != null">
-        tokenid = #{record.tokenid,jdbcType=VARCHAR},
-      </if>
-      <if test="record.phone != null">
-        phone = #{record.phone,jdbcType=VARCHAR},
-      </if>
-      <if test="record.weixin != null">
-        weixin = #{record.weixin,jdbcType=VARCHAR},
-      </if>
-      <if test="record.qq != null">
-        qq = #{record.qq,jdbcType=VARCHAR},
-      </if>
-      <if test="record.struts != null">
-        struts = #{record.struts,jdbcType=VARCHAR},
-      </if>
-      <if test="record.email != null">
-        email = #{record.email,jdbcType=VARCHAR},
-      </if>
-      <if test="record.iconUrl != null">
-        icon_url = #{record.iconUrl,jdbcType=VARCHAR},
+      <if test="record.icon != null">
+        icon = #{record.icon,jdbcType=VARCHAR},
       </if>
       <if test="record.creationTime != null">
         creation_time = #{record.creationTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.birthDate != null">
-        birth_date = #{record.birthDate,jdbcType=DATE},
+      <if test="record.salt != null">
+        salt = #{record.salt,jdbcType=VARCHAR},
       </if>
-      <if test="record.sex != null">
-        sex = #{record.sex,jdbcType=VARCHAR},
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
       </if>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
+      <if test="record.area != null">
+        area = #{record.area,jdbcType=VARCHAR},
       </if>
-      <if test="record.remarks != null">
-        remarks = #{record.remarks,jdbcType=VARCHAR},
+      <if test="record.language != null">
+        language = #{record.language,jdbcType=VARCHAR},
       </if>
-      <if test="record.trueName != null">
-        true_name = #{record.trueName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userName != null">
-        user_name = #{record.userName,jdbcType=VARCHAR},
+      <if test="record.isVip != null">
+        is_vip = #{record.isVip,jdbcType=BIT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -324,109 +231,64 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update t_user
-    set user_id = #{record.userId,jdbcType=INTEGER},
-      username = #{record.username,jdbcType=VARCHAR},
+    set user_id = #{record.userId,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
       nickname = #{record.nickname,jdbcType=VARCHAR},
-      salt = #{record.salt,jdbcType=VARCHAR},
-      tokenid = #{record.tokenid,jdbcType=VARCHAR},
-      phone = #{record.phone,jdbcType=VARCHAR},
-      weixin = #{record.weixin,jdbcType=VARCHAR},
-      qq = #{record.qq,jdbcType=VARCHAR},
-      struts = #{record.struts,jdbcType=VARCHAR},
-      email = #{record.email,jdbcType=VARCHAR},
-      icon_url = #{record.iconUrl,jdbcType=VARCHAR},
+      icon = #{record.icon,jdbcType=VARCHAR},
       creation_time = #{record.creationTime,jdbcType=TIMESTAMP},
-      birth_date = #{record.birthDate,jdbcType=DATE},
-      sex = #{record.sex,jdbcType=VARCHAR},
-      id = #{record.id,jdbcType=INTEGER},
-      remarks = #{record.remarks,jdbcType=VARCHAR},
-      true_name = #{record.trueName,jdbcType=VARCHAR},
-      user_name = #{record.userName,jdbcType=VARCHAR}
+      salt = #{record.salt,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      area = #{record.area,jdbcType=VARCHAR},
+      language = #{record.language,jdbcType=VARCHAR},
+      is_vip = #{record.isVip,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.dly.entity.TUser">
+  <update id="updateByPrimaryKeySelective" parameterType="com.dly.explain.entity.TUser">
     update t_user
     <set>
-      <if test="username != null">
-        username = #{username,jdbcType=VARCHAR},
-      </if>
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
       </if>
       <if test="nickname != null">
         nickname = #{nickname,jdbcType=VARCHAR},
       </if>
-      <if test="salt != null">
-        salt = #{salt,jdbcType=VARCHAR},
-      </if>
-      <if test="tokenid != null">
-        tokenid = #{tokenid,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null">
-        phone = #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="weixin != null">
-        weixin = #{weixin,jdbcType=VARCHAR},
-      </if>
-      <if test="qq != null">
-        qq = #{qq,jdbcType=VARCHAR},
-      </if>
-      <if test="struts != null">
-        struts = #{struts,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null">
-        email = #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="iconUrl != null">
-        icon_url = #{iconUrl,jdbcType=VARCHAR},
+      <if test="icon != null">
+        icon = #{icon,jdbcType=VARCHAR},
       </if>
       <if test="creationTime != null">
         creation_time = #{creationTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="birthDate != null">
-        birth_date = #{birthDate,jdbcType=DATE},
+      <if test="salt != null">
+        salt = #{salt,jdbcType=VARCHAR},
       </if>
-      <if test="sex != null">
-        sex = #{sex,jdbcType=VARCHAR},
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="id != null">
-        id = #{id,jdbcType=INTEGER},
+      <if test="area != null">
+        area = #{area,jdbcType=VARCHAR},
       </if>
-      <if test="remarks != null">
-        remarks = #{remarks,jdbcType=VARCHAR},
+      <if test="language != null">
+        language = #{language,jdbcType=VARCHAR},
       </if>
-      <if test="trueName != null">
-        true_name = #{trueName,jdbcType=VARCHAR},
-      </if>
-      <if test="userName != null">
-        user_name = #{userName,jdbcType=VARCHAR},
+      <if test="isVip != null">
+        is_vip = #{isVip,jdbcType=BIT},
       </if>
     </set>
-    where user_id = #{userId,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.dly.entity.TUser">
+  <update id="updateByPrimaryKey" parameterType="com.dly.explain.entity.TUser">
     update t_user
-    set username = #{username,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
+    set password = #{password,jdbcType=VARCHAR},
       nickname = #{nickname,jdbcType=VARCHAR},
-      salt = #{salt,jdbcType=VARCHAR},
-      tokenid = #{tokenid,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      weixin = #{weixin,jdbcType=VARCHAR},
-      qq = #{qq,jdbcType=VARCHAR},
-      struts = #{struts,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      icon_url = #{iconUrl,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR},
       creation_time = #{creationTime,jdbcType=TIMESTAMP},
-      birth_date = #{birthDate,jdbcType=DATE},
-      sex = #{sex,jdbcType=VARCHAR},
-      id = #{id,jdbcType=INTEGER},
-      remarks = #{remarks,jdbcType=VARCHAR},
-      true_name = #{trueName,jdbcType=VARCHAR},
-      user_name = #{userName,jdbcType=VARCHAR}
-    where user_id = #{userId,jdbcType=INTEGER}
+      salt = #{salt,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      language = #{language,jdbcType=VARCHAR},
+      is_vip = #{isVip,jdbcType=BIT}
+    where user_id = #{userId,jdbcType=VARCHAR}
   </update>
 </mapper>
