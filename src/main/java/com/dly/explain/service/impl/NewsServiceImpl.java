@@ -22,7 +22,7 @@ public class NewsServiceImpl implements NewsService{
 
 	@Override
 	public Result getNews(String id) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub 
 		return null;
 	}
 
